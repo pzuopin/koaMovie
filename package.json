@@ -1,0 +1,19 @@
+{
+  "name": "koamovie",
+  "version": "1.0.0",
+  "description": "Koa2 实现电影微信公众号前后端开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "koa",
+    "wechat"
+  ],
+  "author": "angus",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.6.1",
+    "sha1": "^1.1.1"
+  }
+}
