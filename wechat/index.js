@@ -19,7 +19,4 @@ const WeChatConfig = {
 };
 exports.test = async ()=>{
     const Client = new WeChat(WeChatConfig.weChat);
-    const Data = await Client.fetchAccessToken();
-    console.log('data in db');
-    console.log(Data);
 };
