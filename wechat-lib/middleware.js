@@ -34,11 +34,11 @@ module.exports = (opts)=>{
             context.type = "application/xml";
             context.body = `
             <xml>
-                <ToUserName>< ![CDATA[${Message.FromUserName}] ]></ToUserName>
-                <FromUserName>< ![CDATA[${Message.ToUserName}] ]></FromUserName>
+                <ToUserName><![CDATA[${Message.FromUserName}]]></ToUserName>
+                <FromUserName><![CDATA[${Message.ToUserName}]]></FromUserName>
                 <CreateTime>${parseInt(new Date().getTime() / 1000, 0)}</CreateTime>
-                <MsgType>< ![CDATA[text] ]></MsgType>
-                <Content>< ![CDATA[${Message.Content}] ]></Content>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA[${Message.Content}]]></Content>
                 <MsgId>1234567890123456</MsgId>            
             </xml>
             `;
