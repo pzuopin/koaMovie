@@ -10,7 +10,7 @@ module.exports = async (context, next)=>{
         }else if("3" === content){
             reply = "3. 我喜欢你";
         }else if("兰洁" === content){
-            reply = "兰洁，我喜欢你"
+            reply = "兰洁，我喜欢你";
         }
         context.body = reply;
     }
