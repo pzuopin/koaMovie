@@ -6,19 +6,19 @@ const TokenSchema = new Schema({
     token: String,
     expires_in: Number,
     meta: {
-        createAt: {
+        createdAt: {
             type: Date,
             default: Date.now(),
         },
-        updateAt: {
+        updatedAt: {
             type: Date,
             default: Date.now(),
         },        
     },
 });
-TokenSchema.pre('save', (next)=>{
+TokenSchema.pre('save', function(next){
     if(this.isNew){
-        this.meta.createAt = this.meta.updateAt = Date.now();
+        this.meta.createdAt = this.meta.updatedAt = Date.now();
     }else{
         this.meta.updateAt = Date.now();
     }
