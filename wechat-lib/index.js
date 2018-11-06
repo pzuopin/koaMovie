@@ -9,6 +9,8 @@ module.exports = class WeChat {
         this.opts = Object.assign({}, opts);
         this.appID = opts.appID;
         this.appSecret = opts.appSecret;
+        this.getAccessToken = opts.getAccessToken;
+        this.saveAccessToken = opts.saveAccessToken;
 
         this.fetchAccessToken();
     }
@@ -22,10 +24,8 @@ module.exports = class WeChat {
         }
     }
     async fetchAccessToken(){
-        let data;
-        if(this.getAccessToken){
-            data = await this.getAccessToken();
-        }
+        let data = await this.getAccessToken();
+
         if(!this.isValidToken(data)){
             data = await this.updateAccessToken();
         }
@@ -43,6 +43,8 @@ module.exports = class WeChat {
         data.expires_in = ExpiresIn;
 
         console.log(data);
+
+        await this.saveAccessToken(data);
 
         return data;
     }

@@ -2,11 +2,21 @@ const Koa = require('koa');
 const WeChat = require('./wechat-lib/middleware');
 const Config = require('./config');
 const Reply = require('./wechat/reply');
+const { InitSchemas, Connect } = require('./app/database/init');
 
-const App = new Koa();
+(async ()=>{
+    await Connect(Config.MONGODB);
+    
+    InitSchemas();
 
-App.use(WeChat(Config.WECHAT, Reply));
+    let { test } = require('./wechat');
+    await test();
 
-App.listen(Config.PORT, ()=>{
-    console.log(`Server running at http://0.0.0.0:${Config.PORT}`);
-});
+    const App = new Koa();
+
+    App.use(WeChat(Config.WECHAT, Reply));
+    
+    App.listen(Config.PORT, ()=>{
+        console.log(`Server running at http://0.0.0.0:${Config.PORT}`);
+    });
+})();
