@@ -2,7 +2,6 @@ const sha1 = require('sha1');
 
 module.exports = (opts)=>{
     return async (context, next)=>{
-        console.log(context.query);
         const {
             signature,
             timestamp,
