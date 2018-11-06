@@ -1,3 +1,10 @@
-## koaMovie
+# koaMovie
 
-> 微信公众号配置服务器接入与认证
+> Koa2 实现电影微信公众号前后端开发
+
+## Build Setup
+
+```bash
+# install dependecies
+npm install
+```
