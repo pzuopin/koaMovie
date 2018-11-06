@@ -5,13 +5,27 @@ const glob = require('glob');
 Mongoose.Promise = global.Promise;
 
 exports.Connect = (db)=>{
+    let maxConnectTimes = 0;
     return new Promise((reslove)=>{
+        if(process.env.NODE_ENV !== 'production'){
+            Mongoose.set('debug', true);
+        }
         Mongoose.connect(db);
         Mongoose.connection.on('disconnect', ()=>{
-            console.log("数据库挂了吧，少年");
+            maxConnectTimes++;
+            if(maxConnectTimes < 5){
+                Mongoose.connect(db);
+            }else{
+                throw new Error("数据库挂了~");
+            }
         });
         Mongoose.connection.on('error', (err)=>{
-            console.log(err);
+            maxConnectTimes++;
+            if(maxConnectTimes < 5){
+                Mongoose.connect(db);
+            }else{
+                throw new Error("数据库连接出错了~");
+            }
         });
         Mongoose.connection.on('open', ()=>{
             console.log('MongoDB connected');
