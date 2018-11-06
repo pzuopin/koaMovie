@@ -13,6 +13,7 @@
   "author": "angus",
   "license": "MIT",
   "dependencies": {
+    "ejs": "^2.6.1",
     "koa": "^2.6.1",
     "raw-body": "^2.3.3",
     "sha1": "^1.1.1",

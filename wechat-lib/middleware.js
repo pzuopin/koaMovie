@@ -2,7 +2,7 @@ const Sha1 = require('sha1');
 const GetRawBody = require('raw-body');
 const Util = require('./util');
 
-module.exports = (opts)=>{
+module.exports = (opts, reply)=>{
     return async (context, next)=>{
         let {
             signature,
@@ -28,20 +28,16 @@ module.exports = (opts)=>{
                 limit: '1mb',
                 encoding: context.charset,
             });
-            const Content = await Util.parseXML(Data);
-            const Message = Util.formatMessage(Content.xml);
+            const Content = await Util.ParseXML(Data);
+            const Message = Util.FormatMessage(Content.xml);
+            context.weixin = Message;
+            await reply.apply(context, [context, next]);
+            const ReplyBody = context.body;
+            const Msg = context.weixin;
+            const Xml = Util.Tpl(ReplyBody, Msg);
             context.status = 200;
             context.type = "application/xml";
-            context.body = `
-            <xml>
-                <ToUserName><![CDATA[${Message.FromUserName}]]></ToUserName>
-                <FromUserName><![CDATA[${Message.ToUserName}]]></FromUserName>
-                <CreateTime>${parseInt(new Date().getTime() / 1000, 0)}</CreateTime>
-                <MsgType><![CDATA[text]]></MsgType>
-                <Content><![CDATA[${Message.Content}]]></Content>
-                <MsgId>1234567890123456</MsgId>            
-            </xml>
-            `;
+            context.body = Xml;
         }
     };
 };

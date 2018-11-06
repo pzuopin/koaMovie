@@ -1,6 +1,7 @@
 const Xml2Js = require('xml2js');
+const Template = require('./tpl');
 
-exports.parseXML = xml => {
+const ParseXML = xml => {
     return new Promise((resolve, reject)=>{
         Xml2Js.parseString(xml, {
             trim: true,
@@ -14,7 +15,7 @@ exports.parseXML = xml => {
     });
 };
 
-exports.formatMessage = content =>{
+const FormatMessage = content =>{
     let message = {};
     if("object" === typeof content){
         const Keys = Object.keys(content);
@@ -40,4 +41,31 @@ exports.formatMessage = content =>{
         }
     }
     return message;
+};
+
+const Tpl = (content, message)=>{
+    let type = "text";
+    if(Array.isArray(content)){
+        type = 'news';
+    }
+    if(!content){
+        content = "Empty News";
+    }
+    if(content && content.type){
+        type = content.type;
+    }
+    let info = Object.assign({}, {
+        content: content,
+        msgType: type,
+        createTime: new Date().getTime(),
+        toUserName: message.FromUserName,
+        fromUserName: message.ToUserName,
+    });
+    return Template(info);
+};
+
+module.exports = {
+    ParseXML,
+    FormatMessage,
+    Tpl,
 };
