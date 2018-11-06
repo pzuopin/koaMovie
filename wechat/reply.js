@@ -1,7 +1,7 @@
 module.exports = async (context, next)=>{
     const Message = context.weixin;
     if('text' === Message.MsgType){
-        let content = Message.content;
+        let content = Message.Content;
         let reply = "不管怎么样，我都喜欢你～";
         if("1" === content){
             reply = "1. 我喜欢你";
