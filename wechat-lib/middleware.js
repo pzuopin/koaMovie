@@ -4,23 +4,23 @@ const Util = require('./util');
 
 module.exports = (opts)=>{
     return async (context, next)=>{
-        const {
-            Signature,
-            Timestamp,
-            Nonce,
-            Echostr
+        let {
+            signature,
+            timestamp,
+            nonce,
+            echostr
         } = context.query;
         const Token = opts.Token;
-        let str = [Token, Timestamp, Nonce].sort().join('');
+        let str = [Token, timestamp, nonce].sort().join('');
         const Sha = Sha1(str); 
         if("GET" === context.method){
-            if(Sha === Signature){
-                context.body = Echostr;
+            if(Sha === signature){
+                context.body = echostr;
             }else{
                 context.body = "Falied";
             }            
         }else if("POST" === context.method){
-            if(Sha !== Signature){
+            if(Sha !== signature){
                 return (context.body = "Falied");
             }
             const Data = await GetRawBody(context.req, {
