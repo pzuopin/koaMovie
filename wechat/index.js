@@ -9,4 +9,4 @@ const WeChatConfig = {
 };
 (async ()=>{
     const client = new WeChat(WeChatConfig.weChat);
-})()
+})();
