@@ -39,4 +39,5 @@ exports.formatMessage = content =>{
             }
         }
     }
+    return message;
 };
