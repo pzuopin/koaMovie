@@ -30,6 +30,7 @@ const Api = {
     user: {
         fetch: Base + 'user/get?',
         remark: Base + 'user/info/updateremark?',
+        info: Base + 'user/info?',
     }
 };
 
@@ -290,6 +291,12 @@ module.exports = class WeChat {
             method: 'POST',
             url,
             body,
+        };
+    }
+    getUserInfo(token, openId, lang="zh_CN"){
+        let url = `${Api.user.info}access_token=${token}&openid=${openId}&lang=${lang}`;
+        return {
+            url,
         };
     }
     async handle(operation, ...args){
