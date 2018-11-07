@@ -33,7 +33,7 @@ module.exports = async (context, next)=>{
         }else if("6" === content){
             let data = await client.handle('uploadMaterial', 'video', resolve(__dirname, '../6.mp4'), {
                 type: 'video',
-                description: "{'title': '吃个鸡？', 'introduction': '吃个鸡？'}"
+                description: '{"title": "吃个鸡？", "introduction": "吃个鸡？"}'
             });
             reply = {
                 type: 'video',
