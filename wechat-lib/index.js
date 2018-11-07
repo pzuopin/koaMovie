@@ -152,6 +152,7 @@ module.exports = class WeChat {
     countMaterial(token){
         const Url = `${Api.permanent.count}access_token=${token}`;
         return {
+            method: 'POST',
             Url,
         };
     }
