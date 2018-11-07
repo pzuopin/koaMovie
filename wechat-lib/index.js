@@ -31,6 +31,7 @@ const Api = {
         fetch: Base + 'user/get?',
         remark: Base + 'user/info/updateremark?',
         info: Base + 'user/info?',
+        batch: Base + 'user/info/batchget?',
     }
 };
 
@@ -298,6 +299,17 @@ module.exports = class WeChat {
         return {
             url,
         };
+    }
+    batchUserInfo(token, user_list){
+        let body = {
+            user_list,
+        };
+        let url = `${Api.user.batch}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };        
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();

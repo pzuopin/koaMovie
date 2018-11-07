@@ -42,7 +42,7 @@ module.exports = async (context, next)=>{
                 mediaId: data.media_id,
             };
             if(!data.media_id){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("7" === content){
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'), {
@@ -53,7 +53,7 @@ module.exports = async (context, next)=>{
                 mediaId: data.media_id,
             };
             if(!data.media_id){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("8" === content){
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'), {
@@ -121,7 +121,7 @@ module.exports = async (context, next)=>{
             reply = news;
 
             if(!data.media_id){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("9" === content){
             let counts = await client.handle('countMaterial');
@@ -154,7 +154,7 @@ module.exports = async (context, next)=>{
             news: ${res[3].total_count}
             `;
             if(!res[0].total_count){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("10" === content){
             let newTag = await client.handle("createTag", "测试标签");
@@ -174,19 +174,27 @@ module.exports = async (context, next)=>{
 
             reply = JSON.stringify(tagsData);
             if(!tagsData.tags){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("11" === content){
             let users = await client.handle('getUsers');
             if(!users.total){
-                reply = "11.尚未通过微信认证，无法调用接口～";
+                reply = "11.公众号尚未通过微信认证，无法调用接口～";
             }
         }else if("12" === content){
             let res = await client.handle('remarkUser', Message.FromUserName, 'MENTOR');
-            reply = `${!res.errcode?'您的备注现在是MENTOR':'12.尚未通过微信认证，无法调用接口～'}`;
+            reply = `${!res.errcode?'您的备注现在是MENTOR':'12.公众号尚未通过微信认证，无法调用接口～'}`;
         }else if("13" === content){
             let data = await client.handle('getUserInfo', Message.FromUserName);
-            reply = `${data.openid?JSON.stringify(data):'13.尚未通过微信认证，无法调用接口～'}`;
+            reply = `${data.openid?JSON.stringify(data):'13.公众号尚未通过微信认证，无法调用接口～'}`;
+        }else if("14" === content){
+            let data = await client.handle('batchUserInfo',user_list=[
+                {
+                    openid: Message.FromUserName, 
+                    lang: 'zh_CN',
+                },
+            ]);
+            reply = `${data.user_info_list?JSON.stringify(data):'14.公众号尚未通过微信认证，无法调用接口～'}`;
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
