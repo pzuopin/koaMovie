@@ -168,7 +168,7 @@ module.exports = async (context, next)=>{
             let tagUsers = await client.handle('fetchTagUsers', newTag.tag?newTag.tag.id:1);
             let userTags = await client.handle('getUserTags', Message.FromUserName);
 
-            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag?newTag.tag.id:1, true);
+            await client.handle('batchUsersTag', [Message.FromUserName], newTag.tag?newTag.tag.id:1, true);
 
             await client.handle("delTag", newTag.tag?newTag.tag.id:1);
 
