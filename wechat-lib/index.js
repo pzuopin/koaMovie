@@ -71,7 +71,7 @@ module.exports = class WeChat {
             method: 'POST',
             url: uploadUrl,
             json: true,
-            fromData: form,
+            formData: form,
         };
         return Options;
     }
