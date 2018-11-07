@@ -152,7 +152,7 @@ module.exports = class WeChat {
     countMaterial(token){
         let url = `${Api.permanent.count}access_token=${token}`;
         return {
-            Url,
+            url,
         };
     }
     batchMaterial(token, options){
