@@ -11,10 +11,10 @@ const Api = {
         uploadNews: Base + 'material/add_news?',
         uploadNewsPic: Base + 'media/uploadimg?',
         fetch: Base + 'material/get_material?',
-        batch: Base + 'material/batchget_material?',
-        count: Base + 'material/get_materialcount?',
         del: Base + 'material/del_material?',
         update: Base + 'material/update_news?',
+        count: Base + 'material/get_materialcount?',
+        batch: Base + 'material/batchget_material?'
     },
 };
 
@@ -110,7 +110,7 @@ module.exports = class WeChat {
         } else {
           options.formData = form;
         }
-        
+
         return options;
     }
     fetchMaterial(token, mediaId, type, permanent){
