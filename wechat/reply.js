@@ -177,7 +177,7 @@ module.exports = async (context, next)=>{
                 reply = "尚未通过微信认证，无法调用接口～";
             }
         }else if("11" === content){
-            let users = await handle('getUsers');
+            let users = await client.handle('getUsers');
             if(!users.total){
                 reply = "尚未通过微信认证，无法调用接口～";
             }
