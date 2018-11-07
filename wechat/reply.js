@@ -179,7 +179,7 @@ module.exports = async (context, next)=>{
         }else if("11" === content){
             let users = await client.handle('getUsers');
             if(!users.total){
-                reply = "尚未通过微信认证，无法调用接口～";
+                reply = "11.尚未通过微信认证，无法调用接口～";
             }
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
