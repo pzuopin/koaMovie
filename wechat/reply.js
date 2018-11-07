@@ -83,7 +83,7 @@ module.exports = async (context, next)=>{
                 type: 'image',
                 mediaId: data.media_id,
             };
-        }else if("8" === content){
+        }else if("9" === content){
             let counts = await client.handle('countMaterial');
             console.log(JSON.stringify(counts));
             let res = await Promise.all([
