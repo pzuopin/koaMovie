@@ -112,7 +112,7 @@ module.exports = async (context, next)=>{
             video: ${res[1].total_count}
             voice: ${res[2].total_count}
             news: ${res[3].total_count}
-            `            
+            `;
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
