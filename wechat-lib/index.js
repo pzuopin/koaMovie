@@ -16,7 +16,7 @@ module.exports = class WeChat {
         this.getAccessToken = opts.getAccessToken;
         this.saveAccessToken = opts.saveAccessToken;
 
-        await this.fetchAccessToken();
+        this.fetchAccessToken();
     }
     async request(opts){
         opts = Object.assign({}, opts, {json: true});
