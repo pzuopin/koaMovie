@@ -85,7 +85,6 @@ module.exports = async (context, next)=>{
             };
         }else if("9" === content){
             let counts = await client.handle('countMaterial');
-            console.log(JSON.stringify(counts));
             let res = await Promise.all([
                 client.handle('batchMaterial', {
                   type: 'image',
