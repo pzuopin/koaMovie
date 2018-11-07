@@ -108,7 +108,6 @@ module.exports = async (context, next)=>{
                   count: 10
                 }),
             ]);
-            console.log(res);
             reply = `
             image: ${res[0].total_count}
             video: ${res[1].total_count}
