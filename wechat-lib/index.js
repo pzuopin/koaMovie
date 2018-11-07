@@ -1,6 +1,6 @@
 const Fs = require('fs');
 const Request = require('request-promise');
-const Base = 'https://api.weixin.qq.com/cgi-bin/';
+const Base = 'https://Api.weixin.qq.com/cgi-bin/';
 const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
     temporary: {
@@ -73,38 +73,46 @@ module.exports = class WeChat {
     uploadMaterial(token, type, material, permanent=false){
         let form = {};
         let url = Api.temporary.upload;
-        if(permanent){
-            url = Api.permanent.upload;
-            form = Object.assign(form, permanent);
+
+        if (permanent) {
+          url = Api.permanent.upload;
+          form = Object.assign(form, permanent);
         }
-        if('pic' === type){
-            url = Api.permanent.uploadNewsPic;
+    
+        if (type === 'pic') {
+          url = Api.permanent.uploadNewsPic;
         }
-        if('news' === type){
-            url = Api.permanent.uploadNews;
-            form = material;
-        }else{
-            form.media = Fs.createReadStream(material);
+
+        if (type === 'news') {
+          url = Api.permanent.uploadNews;
+          form = material;
+        } else {
+          form.media = fs.createReadStream(material);
         }
+    
         let uploadUrl = `${url}access_token=${token}`;
-        if(!permanent){
-            uploadUrl += `&type=${type}`;
-        }else{
-            if(type !== "news"){
-                form.access_token = token;
-            }
+    
+        if (!permanent) {
+          uploadUrl += `&type=${type}`;
+        } else {
+          if (type !== 'news') {
+            form.access_token = token;
+          }
         }
-        const Options = {
-            method: 'POST',
-            url: uploadUrl,
-            json: true,
-        };
-        if("news" === type){
-            Options.body = form;
-        }else{
-            Options.formData = form;
+        const options = {
+          method: 'POST',
+          url: uploadUrl,
+          json: true,
         }
-        return Options;
+
+        if (type === 'news') {
+          options.body = form;
+        } else {
+          options.formData = form;
+        }
+    
+        console.log(options);
+        return options;
     }
     fetchMaterial(token, mediaId, type, permanent){
         let form = {};
