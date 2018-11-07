@@ -183,6 +183,7 @@ module.exports = class WeChat {
         const TokenData = await this.fetchAccessToken();
         const Options = this[operation](TokenData.access_token, ...args);
         const Data = await this.request(Options);
+        console.log(operation, ":", Data);
         return Data;
     }
 };

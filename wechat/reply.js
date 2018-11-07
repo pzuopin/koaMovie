@@ -90,17 +90,19 @@ module.exports = async (context, next)=>{
             let items = newsData.news_item;
             let news = [];
 
-            items.forEach(item => {
-                news.push({
-                    title: item.title,
-                    description: item.description,
-                    picUrl: data2.url,
-                    url: item.url,
+            if(items){
+                items.forEach(item => {
+                    news.push({
+                        title: item.title,
+                        description: item.description,
+                        picUrl: data2.url,
+                        url: item.url,
+                    });
                 });
-            });
+            }
 
             reply = news;
-            
+
             if(!data.media_id){
                 reply = "尚未通过微信认证，无法调用接口～";
             }
