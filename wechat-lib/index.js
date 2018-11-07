@@ -110,8 +110,7 @@ module.exports = class WeChat {
         } else {
           options.formData = form;
         }
-    
-        console.log(options);
+        
         return options;
     }
     fetchMaterial(token, mediaId, type, permanent){
