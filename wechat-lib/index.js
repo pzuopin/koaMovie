@@ -87,7 +87,7 @@ module.exports = class WeChat {
           url = Api.permanent.uploadNews;
           form = material;
         } else {
-          form.media = fs.createReadStream(material);
+          form.media = Fs.createReadStream(material);
         }
     
         let uploadUrl = `${url}access_token=${token}`;
