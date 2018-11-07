@@ -159,18 +159,18 @@ module.exports = async (context, next)=>{
         }else if("10" === content){
             let newTag = await client.handle("createTag", "测试标签");
             
-            await client.handle("updateTag", newTag.tag.id, "还是测试标签");
+            await client.handle("updateTag", newTag.tag?newTag.tag.id:1, "还是测试标签");
             
             let tagsData = await client.handle('fetchTags');
 
-            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag.id);
+            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag?newTag.tag.id:1);
 
-            let tagUsers = await client.handle('fetchTagUsers', newTag.tag.id);
+            let tagUsers = await client.handle('fetchTagUsers', newTag.tag?newTag.tag.id:1);
             let userTags = await client.handle('getUserTags', Message.FromUserName);
 
-            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag.id, true);
+            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag?newTag.tag.id:1, true);
 
-            await client.handle("delTag", newTag.tag.id);
+            await client.handle("delTag", newTag.tag?newTag.tag.id:1);
 
             reply = JSON.stringify(tagsData);
             if(!tagsData.tags){
