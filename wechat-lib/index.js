@@ -29,6 +29,7 @@ const Api = {
     },
     user: {
         fetch: Base + 'user/get?',
+        remark: Base + 'user/info/updateremark?',
     }
 };
 
@@ -277,6 +278,18 @@ module.exports = class WeChat {
         let url = `${Api.user.fetch}access_token=${token}&next_openid=${openId || ''}`;
         return {
             url,
+        };
+    }
+    remarkUser(token, openId, remark){
+        let body = {
+            openid: openId,
+            remark: remark,
+        };
+        let url = `${Api.user.remark}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
         };
     }
     async handle(operation, ...args){
