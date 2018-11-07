@@ -5,7 +5,17 @@ const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
     temporary: {
         upload: Base + 'media/upload?',
-    }
+    },
+    permanent: {
+        upload: Base + 'material/add_material?',
+        uploadNews: Base + 'material/add_news?',
+        uploadNewsPic: Base + 'media/uploadimg?',
+        fetch: Base + 'material/get_material?',
+        batch: Base + 'material/batchget_material?',
+        count: Base + 'material/get_materialcount?',
+        del: Base + 'material/del_material?',
+        update: Base + 'material/update_news?',
+    },
 };
 
 module.exports = class WeChat {
@@ -64,16 +74,92 @@ module.exports = class WeChat {
         let form = {};
         let url = Api.temporary.upload;
         if(permanent){
+            url = Api.permanent.upload;
+            form = Object.assign(form, permanent);
         }
-        form.media = Fs.createReadStream(material);
-        let uploadUrl = `${url}access_token=${token}&type=${type}`;
+        if('pic' === type){
+            url = Api.permanent.uploadNewsPic;
+        }
+        if('news' === type){
+            url = Api.permanent.uploadNews;
+            form = material;
+        }else{
+            form.media = Fs.createReadStream(material);
+        }
+        let uploadUrl = `${url}access_token=${token}`;
+        if(!permanent){
+            uploadUrl += `&type=${type}`;
+        }else{
+            if(type !== "news"){
+                form.access_token = token;
+            }
+        }
         const Options = {
             method: 'POST',
             url: uploadUrl,
             json: true,
-            formData: form,
         };
+        if("news" === type){
+            Options.body = form;
+        }else{
+            Options.formData = form;
+        }
         return Options;
+    }
+    fetchMaterial(token, mediaId, type, permanent){
+        let form = {};
+        let fetchUrl = Api.permanent.fetch;
+        let url = `${fetchUrl}access_token=${token}`;
+        const Options = {
+            method: 'POST',
+            url,
+        };
+        form.media_id = mediaId;
+        form.access_token = token;
+        Options.body = form;
+        return Options;
+    }
+    deleteMaterial(token, mediaId){
+        const Form = {
+            media_id: mediaId,
+        };
+        const Url = `${Api.permanent.del}access_token=${token}&media_id=${mediaId}`;
+        return {
+            method: 'POST',
+            url,
+            body: Form,
+        };
+    }
+    updateMaterial(token, mediaId, news){
+        let form = {
+            media_id: mediaId,
+        };
+        form = Object.assign(form, news);
+        const Url = `${Api.permanent.update}access_token=${token}&media_id=${mediaId}`;
+        return {
+            method: 'POST',
+            url,
+            body: Form,
+        };        
+    }
+    countMaterial(token){
+        const Url = `${Api.permanent.count}access_token=${token}`;
+        return {
+            url,
+        };
+    }
+    batchMaterial(token, options){
+        options.type = options.type || 'image';
+        options.offset = options.offset || 0;
+        options.count = options.count || 10;
+
+        const Url = `${Api.permanent.batch}access_token=${token}`;
+        
+        return {
+            method: 'POST',
+            Url,
+            body: options,
+        };
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();
