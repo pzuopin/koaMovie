@@ -130,7 +130,7 @@ module.exports = class WeChat {
         const Form = {
             media_id: mediaId,
         };
-        const Url = `${Api.permanent.del}access_token=${token}&media_id=${mediaId}`;
+        let url = `${Api.permanent.del}access_token=${token}&media_id=${mediaId}`;
         return {
             method: 'POST',
             url,
@@ -142,7 +142,7 @@ module.exports = class WeChat {
             media_id: mediaId,
         };
         form = Object.assign(form, news);
-        const Url = `${Api.permanent.update}access_token=${token}&media_id=${mediaId}`;
+        let url = `${Api.permanent.update}access_token=${token}&media_id=${mediaId}`;
         return {
             method: 'POST',
             url,
@@ -150,10 +150,9 @@ module.exports = class WeChat {
         };        
     }
     countMaterial(token){
-        const Url = `${Api.permanent.count}access_token=${token}`;
+        let url = `${Api.permanent.count}access_token=${token}`;
         return {
-            method: 'POST',
-            Url,
+            url,
         };
     }
     batchMaterial(token, options){
@@ -161,11 +160,11 @@ module.exports = class WeChat {
         options.offset = options.offset || 0;
         options.count = options.count || 10;
 
-        const Url = `${Api.permanent.batch}access_token=${token}`;
+        let url = `${Api.permanent.batch}access_token=${token}`;
         
         return {
             method: 'POST',
-            Url,
+            url,
             body: options,
         };
     }
