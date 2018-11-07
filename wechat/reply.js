@@ -25,6 +25,7 @@ module.exports = async (context, next)=>{
             };
         }else if("5" === content){
             let data = await client.handle('uploadMaterial', 'video', resolve(__dirname, '../6.mp4'));
+            console.log(data);
             reply = {
                 type: 'video',
                 title: "回复的视频标题",
