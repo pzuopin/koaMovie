@@ -40,7 +40,10 @@ module.exports = async (context, next)=>{
                 title: "吃个鸡？",
                 description: "吃个鸡？",
                 mediaId: data.media_id,
-            };            
+            };
+            if(!data.media_id){
+                reply = "尚未通过微信认证，无法调用接口～";
+            }
         }else if("7" === content){
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'), {
                 type: 'image',
@@ -49,6 +52,9 @@ module.exports = async (context, next)=>{
                 type: 'image',
                 mediaId: data.media_id,
             };
+            if(!data.media_id){
+                reply = "尚未通过微信认证，无法调用接口～";
+            }
         }else if("8" === content){
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'), {
                 type: 'image',
@@ -83,6 +89,9 @@ module.exports = async (context, next)=>{
                 type: 'image',
                 mediaId: data.media_id,
             };
+            if(!data.media_id){
+                reply = "尚未通过微信认证，无法调用接口～";
+            }
         }else if("9" === content){
             let counts = await client.handle('countMaterial');
             let res = await Promise.all([
@@ -113,6 +122,9 @@ module.exports = async (context, next)=>{
             voice: ${res[2].total_count}
             news: ${res[3].total_count}
             `;
+            if(!res[0].total_count){
+                reply = "尚未通过微信认证，无法调用接口～";
+            }
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
