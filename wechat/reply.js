@@ -200,5 +200,13 @@ module.exports = async (context, next)=>{
         }
         context.body = reply;
     }
+    
+    if('event' === Message.MsgType){
+        let reply = '';
+        if("LOCATION" === Message.Event){
+            reply = `您上报的位置是：${Message.Latitude}-${Message.Longitude}-${Message.Precision}`;
+            context.body = reply;
+        }
+    }
     await next();
 };
