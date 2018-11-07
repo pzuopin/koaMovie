@@ -34,7 +34,7 @@ module.exports = class WeChat {
             const res = await Request(opts);
             return res;
         }catch(err){
-            console.log(res);
+            console.log(err);
         }
     }
     async fetchAccessToken(){
