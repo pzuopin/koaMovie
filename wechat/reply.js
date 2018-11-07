@@ -96,7 +96,7 @@ module.exports = async (context, next)=>{
                     "digest": "没有摘要",
                     "show_cover_pic": 1,
                     "content": "点击去往我的博客",
-                    "content_source_url": "http://www.feihu1996.cn",                    
+                    "content_source_url": "http://www.feihu1996.cn",
                 },
             };
 
