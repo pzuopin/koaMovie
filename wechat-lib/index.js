@@ -157,7 +157,7 @@ module.exports = class WeChat {
         return {
             method: 'POST',
             url,
-            body: Form,
+            body: form,
         };        
     }
     countMaterial(token){

@@ -85,6 +85,23 @@ module.exports = async (context, next)=>{
                 ],
             };
             let uploadData = await client.handle('uploadMaterial', "news", media, {});
+
+            let newMedia = {
+                media_id: uploadData.media_id,
+                index: 0,
+                articles: {
+                    "title": "这是服务端上传的图文 1",
+                    "thumb_media_id": data.media_id,
+                    "author": "Angus",
+                    "digest": "没有摘要",
+                    "show_cover_pic": 1,
+                    "content": "点击去往我的博客",
+                    "content_source_url": "http://www.feihu1996.cn",                    
+                },
+            };
+
+            await client.handle('updateMaterial', uploadData.media_id, newMedia);
+
             let newsData = await client.handle('fetchMaterial', uploadData.media_id, 'news', {});
             
             let items = newsData.news_item;
