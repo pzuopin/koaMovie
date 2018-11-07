@@ -5,6 +5,7 @@ const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
     temporary: {
         upload: Base + 'media/upload?',
+        fetch: Base + 'media/get?',
     },
     permanent: {
         upload: Base + 'material/add_material?',
@@ -115,15 +116,25 @@ module.exports = class WeChat {
     }
     fetchMaterial(token, mediaId, type, permanent){
         let form = {};
-        let fetchUrl = Api.permanent.fetch;
+        let fetchUrl = Api.temporary.fetch;
+        if(permanent){
+            fetchUrl = Api.permanent.fetch;
+        }
         let url = `${fetchUrl}access_token=${token}`;
         const Options = {
             method: 'POST',
             url,
         };
-        form.media_id = mediaId;
-        form.access_token = token;
-        Options.body = form;
+        if(permanent){
+            form.media_id = mediaId;
+            form.access_token = token;
+            Options.body = form;
+        }else{
+            if("video" === type){
+                url = url.replace("https:", "http");
+            }
+            url += "&media_id=" + mediaId;
+        }
         return Options;
     }
     deleteMaterial(token, mediaId){
