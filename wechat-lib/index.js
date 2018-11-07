@@ -39,14 +39,10 @@ module.exports = class WeChat {
         const url = `${Api.accessToken}&appid=${this.appID}&secret=${this.appSecret}`;
         const data = await this.request({ url });
 
-        console.log(data);
-
         const Now = new Date().getTime();
         const ExpiresIn = Now + (data.expires_in - 20) * 1000;
 
         data.expires_in = ExpiresIn;
-
-        console.log(data);
 
         await this.saveAccessToken(data);
 
