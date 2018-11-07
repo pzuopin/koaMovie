@@ -129,22 +129,22 @@ module.exports = async (context, next)=>{
                 client.handle('batchMaterial', {
                   type: 'image',
                   offset: 0,
-                  count: 10
+                  count: 10,
                 }),
                 client.handle('batchMaterial', {
                   type: 'video',
                   offset: 0,
-                  count: 10
+                  count: 10,
                 }),
                 client.handle('batchMaterial', {
                   type: 'voice',
                   offset: 0,
-                  count: 10
+                  count: 10,
                 }),
                 client.handle('batchMaterial', {
                   type: 'news',
                   offset: 0,
-                  count: 10
+                  count: 10,
                 }),
             ]);
             reply = `
@@ -154,6 +154,26 @@ module.exports = async (context, next)=>{
             news: ${res[3].total_count}
             `;
             if(!res[0].total_count){
+                reply = "尚未通过微信认证，无法调用接口～";
+            }
+        }else if("10" === content){
+            let newTag = await client.handle("createTag", "测试标签");
+            
+            await client.handle("updateTag", newTag.tag.id, "还是测试标签");
+            
+            let tagsData = await client.handle('fetchTags');
+
+            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag.id);
+
+            let tagUsers = await client.handle('fetchTagUsers', newTag.tag.id);
+            let userTags = await client.handle('getUserTags', Message.FromUserName);
+
+            await client.handle(batchUsersTag, [Message.FromUserName], newTag.tag.id, true);
+
+            await client.handle("delTag", newTag.tag.id);
+
+            reply = JSON.stringify(tagsData);
+            if(!tagsData.tags){
                 reply = "尚未通过微信认证，无法调用接口～";
             }
         }else if("兰洁" === content){

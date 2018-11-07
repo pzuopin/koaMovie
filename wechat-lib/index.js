@@ -17,6 +17,16 @@ const Api = {
         count: Base + 'material/get_materialcount?',
         batch: Base + 'material/batchget_material?'
     },
+    tag: {
+        create: Base + 'tags/create?',
+        fetch: Base + 'tags/get?',
+        update: Base + 'tags/update?',
+        del: Base + 'tags/delete?',
+        fetchUsers: Base + 'user/tag/get?',
+        batchTag: Base + 'tags/members/batchtagging?',
+        batchUnTag: Base + 'tags/members/batchuntagging?',
+        getUserTags: Base + 'tags/getidlist?',
+    },
 };
 
 module.exports = class WeChat {
@@ -177,6 +187,87 @@ module.exports = class WeChat {
             method: 'POST',
             url,
             body: options,
+        };
+    }
+    createTag(token, name){
+        let body = {
+            tag: {
+                name,
+            },
+        };
+        let url = `${Api.tag.create}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
+    }
+    fetchTags(token){
+        let url = `${Api.tag.fetch}access_token=${token}`;
+        return {
+            url,
+        };
+    }
+    updateTag(token, id, name){
+        let body = {
+            tag: {
+                id,
+                name,
+            },
+        };
+        let url = `${Api.tag.update}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
+    }
+    delTag(token, id){
+        let body = {
+            tag: {
+                id,
+            },
+        };
+        let url = `${Api.tag.del}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
+    }
+    fetchTagUsers(token, tagId, openId){
+        let body = {
+            tagid: tagId,
+            next_openid: openId || '',
+        };
+        let url = `${Api.tag.fetchUsers}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
+    }
+    batchUsersTag(token, openIdList, tagId, unTag){
+        let body = {
+            openid_list: openIdList,
+            tagid: tagId,
+        };
+        let url = `${!unTag?Api.tag.batchTag:Api.tag.batchUnTag}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
+    }
+    getUserTags(token, openId){
+        let body = {
+            openid: openId
+        };
+        let url = `${Api.tag.getUserTags}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
         };
     }
     async handle(operation, ...args){
