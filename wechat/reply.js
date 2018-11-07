@@ -18,14 +18,12 @@ module.exports = async (context, next)=>{
             reply = "3. 我喜欢你";
         }else if("4" === content){
             let data = await client.handle('uploadMaterial', 'image', resolve(__dirname, '../2.jpg'));
-            console.log(data);
             reply = {
                 type: 'image',
                 mediaId: data.media_id,
             };
         }else if("5" === content){
             let data = await client.handle('uploadMaterial', 'video', resolve(__dirname, '../6.mp4'));
-            console.log(data);
             reply = {
                 type: 'video',
                 title: "回复的视频标题",
