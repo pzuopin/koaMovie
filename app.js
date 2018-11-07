@@ -9,9 +9,6 @@ const { InitSchemas, Connect } = require('./app/database/init');
     
     InitSchemas();
 
-    let { test } = require('./wechat');
-    await test();
-
     const App = new Koa();
 
     App.use(WeChat(Config.WECHAT, Reply));

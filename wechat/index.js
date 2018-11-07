@@ -1,7 +1,9 @@
 const WeChat = require('../wechat-lib');
 const Config = require('../config');
 const Mongoose = require('mongoose');
+
 const Token = Mongoose.model('Token');
+
 const WeChatConfig = {
     weChat: {
         appID: Config.WECHAT.AppID,
@@ -17,6 +19,5 @@ const WeChatConfig = {
         },
     },
 };
-exports.test = async ()=>{
-    const Client = new WeChat(WeChatConfig.weChat);
-};
+
+exports.getWeChat = () => new WeChat(WeChatConfig.weChat);
