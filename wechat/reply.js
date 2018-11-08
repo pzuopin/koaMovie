@@ -382,10 +382,10 @@ module.exports = async (context, next)=>{
             reply = `你扫码了：${Message.ScanCodeInfo.ScanType} ${Message.ScanCodeInfo.ScanResult}`;
         }
         if("pic_sysphoto" === Message.Event){
-            reply = `系统拍照发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
+            reply = `系统拍照发图：${Message.SendPicsInfo.Count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
         }
         if("pic_photo_or_album" === Message.Event){
-            reply = `拍照或者相册发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
+            reply = `拍照或者相册发图：${Message.SendPicsInfo.Count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
         }
         if("pic_weixin" === Message.Event){
             reply = `微信相册发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
