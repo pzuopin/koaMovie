@@ -44,6 +44,9 @@ const Api = {
         create: Base + 'shorturl?',
     },
     SemanticUrl,
+    ai: {
+        translate: Base + 'media/voice/translatecontent?',
+    },
 };
 
 module.exports = class WeChat {
@@ -354,7 +357,15 @@ module.exports = class WeChat {
             method: 'POST',
             url,
             body: semanticData,
-        };        
+        };
+    }
+    aiTranslate(token, body, lfrom, lto){
+        let url = `${Api.ai.translate}access_token=${token}&lfrom=${lfrom}&lto=${lto}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();
