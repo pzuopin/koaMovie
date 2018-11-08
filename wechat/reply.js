@@ -419,7 +419,7 @@ module.exports = async (context, next)=>{
                 };
                 let data = await client.handle('createMenu', menu, rules);
                 data = await client.handle('fetchMenu');
-                reply = data.menu?JSON.stringify(data):'22.公众号尚未通过微信认证，无法调用接口～';
+                reply = data.conditionalmenu?'个性化菜单创建成功～':'22.公众号尚未通过微信认证，无法调用接口～';
             }catch(e){
                 console.log(e);
             }            
