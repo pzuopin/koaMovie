@@ -9,7 +9,7 @@ module.exports = async (context, next)=>{
     
     if('text' === Message.MsgType){
         let content = Message.Content;
-        let reply = "不管怎么样，我都喜欢你～";
+        let reply = "接收文本消息～";
         if("1" === content){
             reply = "1. 我喜欢你";
         }else if("2" === content){
@@ -290,6 +290,68 @@ module.exports = async (context, next)=>{
             }catch(e){
                 console.log(e);
             }
+        }else if("21" === content){
+            try{
+                await client.handle('deleteMenu');
+                let menu = {
+                    button: [
+                        {
+                            name: '发图扫码',
+                            sub_button: [
+                                {
+                                    name: '系统拍照发图',
+                                    type: 'pic_sysphoto',
+                                    key: 'rselfmenu_1_0',
+                                },
+                                {
+                                    name: '拍照或者相册发图',
+                                    type: 'pic_photo_or_album',
+                                    key: 'rselfmenu_1_1',
+                                },
+                                {
+                                    name: '微信相册发图',
+                                    type: 'pic_weixin',
+                                    key: 'rselfmenu_1_2',
+                                },
+                                {
+                                    name: '扫码推',
+                                    type: 'scancode_push',
+                                    key: 'rselfmenu_0_1',
+                                },
+                                {
+                                    name: '扫码带提示',
+                                    type: 'scancode_waitmsg',
+                                    key: 'rselfmenu_0_0',
+                                },                                
+                            ],
+                        },
+                        {
+                            name: '分类',
+                            type: 'view',
+                            url: 'http://www.feihu1996.cn/',
+                        },
+                        {
+                            name: `其他`,
+                            sub_button: [
+                                {
+                                    name: '点击',
+                                    type: 'click',
+                                    key: "no_110",
+                                },
+                                {
+                                    name: '地理位置',
+                                    type: "location_select",
+                                    key: 'no_111'
+                                },
+                            ],
+                        },
+                    ],
+                };
+                let data = await client.handle('createMenu', menu);
+                reply = !data.errcode?'自定义菜单创建成功~':'21.公众号尚未通过微信认证，无法调用接口～';
+            }catch(e){
+                console.log(e);
+            }
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
@@ -297,11 +359,46 @@ module.exports = async (context, next)=>{
     }
     
     if('event' === Message.MsgType){
-        let reply = '';
+        let reply = '接收事件推送～';
+        if("subscribe" === Message.Event){
+            reply = `欢迎订阅～${Message.EventKey?'扫码关注，扫码参数：'+Message.EventKey+'，Ticket：,'+Message.Ticket:''}`;
+        }
+        if("SCAN" === Message.Event){
+            reply = `扫描带参数二维码，二维码scene_id：${Message.EventKey}，二维码的ticket：${Message.Ticket}`;
+        }
+        if("unsubscribe" === Message.Event){
+            reply = `无情取消订阅～`;
+        }
         if("LOCATION" === Message.Event){
             reply = `您上报的位置是：${Message.Latitude}-${Message.Longitude}-${Message.Precision}`;
-            context.body = reply;
         }
+        if("CLICK" === Message.Event){
+            reply = `你点击了菜单的${Message.EventKey}`;
+        }
+        if("VIEW" === Message.Event){
+            reply = `你点击了菜单链接： ${Message.EventKey} ${Message.MenuId}`;
+        }
+        if("scancode_push" === Message.Event || "scancode_waitmsg" === Message.Event){
+            reply = `你扫码了：${Message.ScanCodeInfo.ScanType} ${Message.ScanCodeInfo.ScanResult}`;
+        }
+        if("pic_sysphoto" === Message.Event){
+            reply = `系统拍照发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
+        }
+        if("pic_photo_or_album" === Message.Event){
+            reply = `拍照或者相册发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
+        }
+        if("pic_weixin" === Message.Event){
+            reply = `微信相册发图：${Message.SendPicsInfo.count} ${JSON.stringify(Message.SendPicsInfo.PicList)}`;
+        }
+        if("location_select" === Message.Event){
+            reply = `地理位置：${JSON.stringify(Message.SendLocationInfo)}`;
+        }
+        context.body = reply;
+    }
+
+    if('image' === Message.MsgType){
+        reply = `接收图片消息：${Message.PicUrl?Message.PicUrl:''}`;
+        context.body = reply;
     }
     await next();
 };
