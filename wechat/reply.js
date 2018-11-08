@@ -208,6 +208,18 @@ module.exports = async (context, next)=>{
             let tempTicketData = await client.handle('createQrcode', tempQrData);
             let tempQr = client.showQrcode(tempTicketData.ticket);
             reply = tempTicketData.ticket?tempQr:'15.公众号尚未通过微信认证，无法调用接口～';
+        }else if("16" === content){
+            let qrData = {
+                action_name: "QR_SCENE", 
+                action_info: {
+                    scene: {
+                        scene_id: 99,
+                    }
+                }
+            };
+            let ticketData = await client.handle('createQrcode', qrData);
+            let qr = client.showQrcode(ticketData.ticket);
+            reply = ticketData.ticket?qr:'15.公众号尚未通过微信认证，无法调用接口～';
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
