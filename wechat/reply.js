@@ -219,7 +219,7 @@ module.exports = async (context, next)=>{
             };
             let ticketData = await client.handle('createQrcode', qrData);
             let qr = client.showQrcode(ticketData.ticket);
-            reply = ticketData.ticket?qr:'15.公众号尚未通过微信认证，无法调用接口～';
+            reply = ticketData.ticket?qr:'16.公众号尚未通过微信认证，无法调用接口～';
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
