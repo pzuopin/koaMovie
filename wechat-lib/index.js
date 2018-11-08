@@ -50,6 +50,8 @@ const Api = {
     menu: {
         create: Base + 'menu/create?',
         del: Base + 'menu/delete?',
+        custom: Base + 'menu/addconditional?',
+        fetch: Base + 'menu/get?',
     },
 };
 
@@ -371,8 +373,12 @@ module.exports = class WeChat {
             body,
         };
     }
-    createMenu(token, menu){
+    createMenu(token, menu, rules){
         let url = `${Api.menu.create}access_token=${token}`;
+        if(rules){
+            url = `${Api.menu.custom}access_token=${token}`;
+            menu.matchrule = rules;
+        }
         return {
             method: 'POST',
             url,
@@ -381,6 +387,12 @@ module.exports = class WeChat {
     }
     deleteMenu(token){
         let url = `${Api.menu.del}access_token=${token}`;
+        return {
+            url,
+        };
+    }
+    fetchMenu(token){
+        let url = `${Api.menu.fetch}access_token=${token}`;
         return {
             url,
         };
