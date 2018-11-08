@@ -224,6 +224,15 @@ module.exports = async (context, next)=>{
             let longUrl = "http://shang.qq.com/email/stop/email_stop.html?qq=3027677825&sig=083194b1effe19859c6add1d0e4e72e4b634b33db21a3d2c&tttt=1";
             let shortUrlData = await client.handle('createShortUrl', longUrl);
             reply = shortUrlData.short_url?shortUrlData.short_url:'17.公众号尚未通过微信认证，无法调用接口～';
+        }else if("18" === content){
+            let semanticData = {
+                query: '查一下明天从北京到上海的南航机票',
+                city: '北京',
+                category: 'flight,hotel',
+                uid: Message.FromUserName,
+            };
+            let searchData = await client.handle('semantic', semanticData);
+            reply = !searchData.errcode?JSON.stringify(searchData):'18.公众号尚未通过微信认证，无法调用接口～';
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }

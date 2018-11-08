@@ -1,7 +1,9 @@
 const Fs = require('fs');
 const Request = require('request-promise');
+
 const Base = 'https://Api.weixin.qq.com/cgi-bin/';
 const MpBase = 'https://mp.weixin.qq.com/cgi-bin/';
+const SemanticUrl = 'https://api.weixin.qq.com/semantic/semproxy/search?';
 const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
     temporary: {
@@ -41,6 +43,7 @@ const Api = {
     shortUrl: {
         create: Base + 'shorturl?',
     },
+    SemanticUrl,
 };
 
 module.exports = class WeChat {
@@ -343,6 +346,15 @@ module.exports = class WeChat {
             url,
             body,
         };
+    }
+    semantic(token, semanticData){
+        let url = `${Api.SemanticUrl}access_token=${token}`;
+        semanticData.appid = this.appID;
+        return {
+            method: 'POST',
+            url,
+            body: semanticData,
+        };        
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();
