@@ -1,6 +1,7 @@
 const Fs = require('fs');
 const Request = require('request-promise');
 const Base = 'https://Api.weixin.qq.com/cgi-bin/';
+const MpBase = 'https://mp.weixin.qq.com/cgi-bin/';
 const Api = {
     accessToken: Base + 'token?grant_type=client_credential',
     temporary: {
@@ -32,7 +33,11 @@ const Api = {
         remark: Base + 'user/info/updateremark?',
         info: Base + 'user/info?',
         batch: Base + 'user/info/batchget?',
-    }
+    },
+    qrcode: {
+        create: Base + 'qrcode/create?',
+        show: MpBase + 'showqrcode?',
+    },
 };
 
 module.exports = class WeChat {
@@ -310,6 +315,19 @@ module.exports = class WeChat {
             url,
             body,
         };        
+    }
+    createQrcode(token, qr){
+        let url = `${Api.qrcode.create}access_token=${token}`;
+        let body = qr;
+        return {
+            method: 'POST',
+            url,
+            body,            
+        };
+    }
+    showQrcode(ticket){
+        let url = `${Api.qrcode.show}ticket=${encodeURI(ticket)}`;
+        return url;
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();
