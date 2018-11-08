@@ -220,6 +220,10 @@ module.exports = async (context, next)=>{
             let ticketData = await client.handle('createQrcode', qrData);
             let qr = client.showQrcode(ticketData.ticket);
             reply = ticketData.ticket?qr:'16.公众号尚未通过微信认证，无法调用接口～';
+        }else if("17" === content){
+            let longUrl = "http://shang.qq.com/email/stop/email_stop.html?qq=3027677825&sig=083194b1effe19859c6add1d0e4e72e4b634b33db21a3d2c&tttt=1";
+            let shortUrlData = await client.handle('createShortUrl', longUrl);
+            reply = shortUrlData.short_url?shortUrlData.short_url:'17.公众号尚未通过微信认证，无法调用接口～';
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }

@@ -38,6 +38,9 @@ const Api = {
         create: Base + 'qrcode/create?',
         show: MpBase + 'showqrcode?',
     },
+    shortUrl: {
+        create: Base + 'shorturl?',
+    },
 };
 
 module.exports = class WeChat {
@@ -322,12 +325,24 @@ module.exports = class WeChat {
         return {
             method: 'POST',
             url,
-            body,            
+            body,
         };
     }
     showQrcode(ticket){
         let url = `${Api.qrcode.show}ticket=${encodeURI(ticket)}`;
         return url;
+    }
+    createShortUrl(token, longUrl, action="long2short"){
+        let body = {
+            action,
+            long_url: longUrl,
+        };
+        let url = `${Api.shortUrl.create}access_token=${token}`;
+        return {
+            method: 'POST',
+            url,
+            body,
+        };
     }
     async handle(operation, ...args){
         const TokenData = await this.fetchAccessToken();
