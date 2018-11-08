@@ -178,6 +178,7 @@ module.exports = async (context, next)=>{
             }
         }else if("11" === content){
             let users = await client.handle('getUsers');
+            reply = `用户总数：${users.total}`;
             if(!users.total){
                 reply = "11.公众号尚未通过微信认证，无法调用接口～";
             }
