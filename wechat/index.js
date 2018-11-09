@@ -1,4 +1,5 @@
 const WeChat = require('../wechat-lib');
+const WeChatOAuth = require('../wechat-lib/oauth');
 const Config = require('../config');
 const Mongoose = require('mongoose');
 
@@ -21,3 +22,4 @@ const WeChatConfig = {
 };
 
 exports.getWeChat = () => new WeChat(WeChatConfig.weChat);
+exports.getWeChatOAuth = () => new WeChatOAuth(WeChatConfig.weChat);
