@@ -1,12 +1,12 @@
 extends ../layout
 block content
     #container.container(style='padding:15px;text-align:center;')
-    h1 语音识别查电影
-    .weui-btn.weui-btn_primary 点击开始录音
-    h2#title
-    #director
-    #year
-    #poster
+        h1 语音识别查电影
+        .weui-btn.weui-btn_primary 点击开始录音
+        h2#title
+        #director
+        #year
+        #poster
     script.
         wx.config({
             debug: true,
@@ -56,7 +56,7 @@ block content
                 wx.previewImage(doubanSlides);
             });            
             $('.weui-btn').on('click', function(){
-                console.log('isRecording:', isRecording);
+                console.log('isRecording:', );
                 if(!isRecording){
                     isRecoding = true;
                     $('.weui-btn').html('再点击停止录音解析搜索');
