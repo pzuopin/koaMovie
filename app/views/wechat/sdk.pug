@@ -9,7 +9,7 @@ block content
         #poster
     script.
         wx.config({
-            debug: true,
+            debug: false,
             appId: '#{appId}', 
             timestamp: #{timestamp}, 
             nonceStr: '#{noncestr}', 
@@ -49,16 +49,16 @@ block content
                     window.alert('分享失败~');
                 },
             };
-            isRecording = false;
+            var isRecording = false;
             var doubanSlides;
             wx.onMenuShareAppMessage(shareContent);
             $('#poster').on('click', function(){
                 wx.previewImage(doubanSlides);
             });            
             $('.weui-btn').on('click', function(){
+                console.log(isRecoding);
                 if(!isRecording){
                     isRecoding = true;
-                    console.log(window.isRecoding);
                     $('.weui-btn').html('再点击停止录音解析搜索');
                     wx.startRecord();
                     return;
