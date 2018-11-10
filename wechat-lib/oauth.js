@@ -34,7 +34,9 @@ module.exports = class WeChatOAuth {
     }
     async getUserInfo(token, openId, lang="zh_CN"){
         const Url = `${Api.userInfo}access_token=${token}&openid=${openId}&lang=${lang}`;
-        const Res = await this.request();
+        const Res = await this.request({
+            url: Url,
+        });
         return Res;
     }
 };
