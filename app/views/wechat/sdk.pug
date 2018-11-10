@@ -49,7 +49,7 @@ block content
                     window.alert('分享失败~');
                 },
             };
-            var isRecording = false;
+            isRecording = false;
             var doubanSlides;
             wx.onMenuShareAppMessage(shareContent);
             $('#poster').on('click', function(){
@@ -57,13 +57,13 @@ block content
             });            
             $('.weui-btn').on('click', function(){
                 if(!isRecording){
-                    window.isRecoding = true;
+                    isRecoding = true;
                     console.log(window.isRecoding);
                     $('.weui-btn').html('再点击停止录音解析搜索');
                     wx.startRecord();
                     return;
                 }
-                window.isRecoding = false;
+                isRecoding = false;
                 $('.weui-btn').html('点击开始录音');
                 wx.stopRecord({
                     success: function(res){
