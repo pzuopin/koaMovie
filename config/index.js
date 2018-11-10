@@ -1,8 +1,8 @@
 const PORT = 8091;
 
 const WECHAT = {
-    AppID: 'wxd0773ac8ecb445b9',
-    AppSecret: 'c42e33b100b2a9905cba9d6b1eafc109',
+    AppID: 'wx3662cd7b42e9a72e',
+    AppSecret: '51285fa6c5d518e4cd3887a3164fcb59',
     Token: '70pJmQ6EfGkNYc9YhXzCi8l8j42K72eE',
 };
 
