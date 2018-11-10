@@ -58,13 +58,13 @@ block content
             $('.weui-btn').on('click', function(){
                 console.log(isRecording);
                 if(!isRecording){
-                    isRecoding = true;
+                    isRecording = true;
                     console.log(isRecording);
                     $('.weui-btn').html('再点击停止录音解析搜索');
                     wx.startRecord();
                     return;
                 }
-                isRecoding = false;
+                isRecording = false;
                 $('.weui-btn').html('点击开始录音');
                 wx.stopRecord({
                     success: function(res){
