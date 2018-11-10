@@ -56,9 +56,9 @@ block content
                 wx.previewImage(doubanSlides);
             });            
             $('.weui-btn').on('click', function(){
-                console.log('isRecording:', isRecording);
                 if(!isRecording){
                     window.isRecoding = true;
+                    console.log(window.isRecoding);
                     $('.weui-btn').html('再点击停止录音解析搜索');
                     wx.startRecord();
                     return;
