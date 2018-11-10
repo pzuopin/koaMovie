@@ -28,7 +28,7 @@ module.exports = class WeChatOAuth {
     async fetchAccessToken(code){
         const Url = `${Api.accessToken}appid=${this.appID}&secret=${this.appSecret}&code=${code}&grant_type=authorization_code`;
         const Res = await this.request({
-            Url,
+            url:Url,
         });
         return Res;
     }
