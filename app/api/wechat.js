@@ -3,8 +3,10 @@ const WeChatOAuth = require('../../wechat').getWeChatOAuth();
 const { Sign } = require('../../wechat-lib/util');
 
 exports.getSignature = async (url) => {
-    const Token = await WeChat.fetchAccessToken().access_token;
-    const Ticket = await WeChat.fetchTicket(Token).ticket;
+    const TokenData = await WeChat.fetchAccessToken();
+    const Token = TokenData.access_token;
+    const TicketData = await WeChat.fetchTicket(Token);
+    const Ticket = TicketData.ticket;
     let params = Sign(Ticket, url);
     params.appId = WeChat.appID;
 
