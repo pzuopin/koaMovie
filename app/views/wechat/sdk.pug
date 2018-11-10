@@ -56,10 +56,8 @@ block content
                 wx.previewImage(doubanSlides);
             });            
             $('.weui-btn').on('click', function(){
-                console.log(isRecording);
                 if(!isRecording){
                     isRecording = true;
-                    console.log(isRecording);
                     $('.weui-btn').html('再点击停止录音解析搜索');
                     wx.startRecord();
                     return;
@@ -100,7 +98,7 @@ block content
                                             urls: [subject.images.large],
                                         };
                                         data.subjects.forEach(function(item){
-                                            doubanSlides.urls.push(item.iamges.large);
+                                            doubanSlides.urls.push(item.images.large);
                                         });
                                         wx.onMenuShareAppMessage(shareContent);
                                     }
