@@ -2,6 +2,7 @@ const Reply = require('../../wechat/reply');
 const Config = require('../../config');
 const WeChatMiddleware = require('../../wechat-lib/middleware');
 const Api = require('../api');
+const { UrlJoin } = require('../util');
 
 exports.hear = async (context, next) => {
     const Middleware = WeChatMiddleware(Config.WECHAT, Reply);
@@ -26,7 +27,7 @@ exports.userInfo = async (context, next) => {
 };
 
 exports.sdk = async (context, next) => {
-    const Url = context.href;
+    const Url = UrlJoin(Config.BASE_URL, context.originalUrl);
     const Params = await Api.wechat.getSignature(Url);
     await context.render('wechat/sdk', Params);
 };
