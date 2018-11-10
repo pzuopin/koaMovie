@@ -25,3 +25,10 @@ exports.userInfo = async (context, next) => {
 
     context.body = UserData;
 };
+
+exports.sdk = async (context, next) => {
+    await context.render('wechat/sdk', {
+        title: 'SDK Test',
+        desc: '测试 SDK',
+    });
+};
