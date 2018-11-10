@@ -4,7 +4,7 @@ const Base = 'https://api.weixin.qq.com/sns/';
 const Api = {
     authorize: 'https://open.weixin.qq.com/connect/oauth2/authorize?',
     accessToken: Base + 'oauth2/access_token?',
-    userInfo: Base + 'sns/userinfo?',
+    userInfo: Base + 'userinfo?',
 };
 
 module.exports = class WeChatOAuth {
