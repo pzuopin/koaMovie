@@ -1,7 +1,7 @@
 const Fs = require('fs');
 const Request = require('request-promise');
 
-const Base = 'https://Api.weixin.qq.com/cgi-bin/';
+const Base = 'https://api.weixin.qq.com/cgi-bin/';
 const MpBase = 'https://mp.weixin.qq.com/cgi-bin/';
 const SemanticUrl = 'https://api.weixin.qq.com/semantic/semproxy/search?';
 const Api = {
@@ -53,6 +53,9 @@ const Api = {
         custom: Base + 'menu/addconditional?',
         fetch: Base + 'menu/get?',
     },
+    ticket: {
+        get: Base + 'ticket/getticket?',
+    },
 };
 
 module.exports = class WeChat {
@@ -62,6 +65,8 @@ module.exports = class WeChat {
         this.appSecret = opts.appSecret;
         this.getAccessToken = opts.getAccessToken;
         this.saveAccessToken = opts.saveAccessToken;
+        this.getTicket = opts.getTicket;
+        this.saveTicket = opts.saveTicket;
 
         this.fetchAccessToken();
     }
@@ -76,8 +81,7 @@ module.exports = class WeChat {
     }
     async fetchAccessToken(){
         let data = await this.getAccessToken();
-
-        if(!this.isValidToken(data)){
+        if(!this.isValid(data)){
             data = await this.updateAccessToken();
         }
         return data;
@@ -95,7 +99,27 @@ module.exports = class WeChat {
 
         return data;
     }
-    isValidToken(data){
+    async fetchTicket(token){
+        let data = await this.getTicket();
+        if(!this.isValid(data)){
+            data = await this.updateTicket(token);
+        }
+        return data;
+    }
+    async updateTicket(token){
+        const url = `${Api.ticket.get}access_token=${token}&type=jsapi`;
+        const data = await this.request({ url });
+
+        const Now = new Date().getTime();
+        const ExpiresIn = Now + (data.expires_in - 20) * 1000;
+
+        data.expires_in = ExpiresIn;
+
+        await this.saveTicket(data);
+
+        return data;
+    }    
+    isValid(data){
         if(!data || !data.expires_in){
             return false;
         }
