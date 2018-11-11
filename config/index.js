@@ -15,10 +15,17 @@ const URL_PREFIX = '/koaMovie';  // /koaMovie
 
 const BASE_URL = 'http://dev.feihu1996.cn/koaMovie';
 
+const SALT_WORK_FACTOR = 10;
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOCK_TIME = 2 * 60 * 60 * 1000;
+
 module.exports = {
     PORT,
     WECHAT,
     MONGODB,
     URL_PREFIX,
     BASE_URL,
+    SALT_WORK_FACTOR,
+    MAX_LOGIN_ATTEMPTS,
+    LOCK_TIME,
 };
