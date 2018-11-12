@@ -1,5 +1,7 @@
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
+const BodyParser = require('koa-bodyparser');
+const Session = require('koa-session');
 const Moment = require('moment');
 const Path = require('path');
 const Config = require('./config');
@@ -20,6 +22,9 @@ const Views = require('koa-views');
             moment: Moment,
         },
     }));
+
+    App.use(Session(App));
+    App.use(BodyParser());
 
     require('./config/routes')(Router);
     App.use(Router.routes()).use(Router.allowedMethods());

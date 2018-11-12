@@ -1,8 +1,11 @@
 const Config = require('../config');
 const WeChat = require('../app/controllers/wechat');
 const User = require('../app/controllers/user');
+const Index = require('../app/controllers/index');
 
 module.exports = router => {
+    router.get(Config.URL_PREFIX + '/', Index.homePage);
+
     router.get(Config.URL_PREFIX + '/wx-hear', WeChat.hear);
     router.post(Config.URL_PREFIX + '/wx-hear', WeChat.hear);
     router.get(Config.URL_PREFIX + '/wx-oauth', WeChat.oauth);
