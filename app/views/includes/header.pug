@@ -1,7 +1,7 @@
 header(style='background: #343a40;')
   .container
     .navbar.navbar-dark
-      a.navbar-brand(href="#{ URL_PREFIX + '/' }") 时光的余热
+      a.navbar-brand(href="#{ URL_PREFIX + '/' }") #{URL_PREFIX}
       form(method='GET', action="#{ URL_PREFIX + '/results' }")
         .input-group
           input.form-control(type='text', name='q')
