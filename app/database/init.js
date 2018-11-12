@@ -10,11 +10,11 @@ exports.Connect = (db)=>{
         if(process.env.NODE_ENV !== 'production'){
             Mongoose.set('debug', true);
         }
-        Mongoose.connect(db, {useNewUrlParser:true});
+        Mongoose.connect(db);
         Mongoose.connection.on('disconnect', ()=>{
             maxConnectTimes++;
             if(maxConnectTimes < 5){
-                Mongoose.connect(db, {useNewUrlParser:true});
+                Mongoose.connect(db);
             }else{
                 throw new Error("数据库挂了~");
             }
@@ -22,7 +22,7 @@ exports.Connect = (db)=>{
         Mongoose.connection.on('error', (err)=>{
             maxConnectTimes++;
             if(maxConnectTimes < 5){
-                Mongoose.connect(db, {useNewUrlParser:true});
+                Mongoose.connect(db);
             }else{
                 throw new Error("数据库连接出错了~");
             }

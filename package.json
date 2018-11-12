@@ -22,7 +22,7 @@
     "koa-session": "^5.10.0",
     "koa-views": "^6.1.4",
     "moment": "^2.22.2",
-    "mongoose": "^5.3.9",
+    "mongoose": "^5.3.11",
     "pug": "^2.0.3",
     "raw-body": "^2.3.3",
     "request": "^2.88.0",
