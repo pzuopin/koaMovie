@@ -43,7 +43,6 @@ const Mongoose = require('mongoose');
                 _id: user._id,
                 nickname: user.nickname,
               },
-              URL_PREFIX: Config.URL_PREFIX,
             });
           }
         } else {

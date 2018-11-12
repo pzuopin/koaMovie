@@ -5,12 +5,14 @@ const {URL_PREFIX} = require('../../config');
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/signUp', {
         title: '注册页面',
+        URL_PREFIX,
     });
 };
 
 exports.showSignIn = async (context, next)=>{
     await context.render('pages/signIn', {
         title: '登录页面',
+        URL_PREFIX,
     });
 };
 
