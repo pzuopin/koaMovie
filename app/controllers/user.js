@@ -52,7 +52,7 @@ exports.signIn = async (context, next) => {
     if(!user){
         return context.redirect(URL_PREFIX + '/user/signUp');
     }
-    let isMatch = await user.checkpassword(password, user.password);
+    let isMatch = await user.checkPassword(password, user.password);
     if(isMatch){
         context.session.user = {
             _id: user._id,
