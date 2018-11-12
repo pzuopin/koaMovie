@@ -1,8 +1,8 @@
 header(style='background: #343a40;')
   .container
     .navbar.navbar-dark
-      a.navbar-brand(href="#{url_prefix}/") 时光的余热
-      form(method='GET', action="#{url_prefix}/results")
+      a.navbar-brand(href="#{ URL_PREFIX + '/' }") 时光的余热
+      form(method='GET', action="#{ URL_PREFIX + '/results' }")
         .input-group
           input.form-control(type='text', name='q')
           span.input-group-btn(style='margin-left: 10px;')
@@ -11,7 +11,7 @@ header(style='background: #343a40;')
         p.navbar-text.navbar-right(style='padding-bottom: 0;')
           span 欢迎您，#{user.nickname}
           span &nbsp;|&nbsp;
-          a.navbar-link(href="#{url_prefix + '/user/logOut'}") 登出
+          a.navbar-link(href="#{URL_PREFIX + '/user/logOut'}") 登出
       else
         p.navbar-text.navbar-right(style='padding-bottom: 0;')
           a.navbar-link(href="#", data-toggle="modal", data-target="#signupModal") 注册
@@ -20,7 +20,7 @@ header(style='background: #343a40;')
 #signupModal.modal.fade
   .modal-dialog
     .modal-content
-      form(method="POST", action="#{url_prefix + '/user/signUp'}")
+      form(method="POST", action="#{URL_PREFIX + '/user/signUp'}")
         .modal-header 注册
         .modal-body
           .form-group
@@ -38,7 +38,7 @@ header(style='background: #343a40;')
 #signinModal.modal.fade
   .modal-dialog
     .modal-content
-      form(method="POST", action="#{url_prefix + '/user/signIn'}")
+      form(method="POST", action="#{URL_PREFIX + '/user/signIn'}")
         .modal-header 登录
         .modal-body
           .form-group

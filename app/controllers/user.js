@@ -4,7 +4,7 @@ const { URL_PREFIX } = require('./../../config');
 
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/signUp', {
-        url_prefix: URL_PREFIX,
+        URL_PREFIX,
         title: '注册页面'
     });
 };
