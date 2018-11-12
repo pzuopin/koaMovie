@@ -22,7 +22,7 @@ exports.signUp = async (context, next)=>{
         password,
         nickname,
     } = context.request.body.user;
-    let user = User.findOne({
+    let user = await User.findOne({
         email: email,
     });
     if(user){
@@ -46,7 +46,7 @@ exports.signIn = async (context, next) => {
         email,
         password,
     } = context.request.body.user;
-    let user = User.findOne({
+    let user = await User.findOne({
         email: email,
     });
     if(!user){
