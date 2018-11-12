@@ -9,7 +9,7 @@ const { InitSchemas, Connect } = require('./app/database/init');
 const Views = require('koa-views');
 
 (async ()=>{
-    await Connect(Config.MONGODB);
+    await Connect(Config.MONGODB, {useNewUrlParser:true});
     
     InitSchemas();
 
