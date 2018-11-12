@@ -16,7 +16,10 @@ const UserSchema = new Schema({
     country: String,
     city: String,
     gender: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+    },
     password: String,
     loginAttempts: {
         type: Number,
@@ -69,7 +72,7 @@ UserSchema.pre('save', (next)=>{
 });
 
 UserSchema.methods = {
-    comparePassword(_password, password){
+    checkPassword(_password, password){
         return new Promise((resolve, reject)=>{
             Bcrypt.compare(_password, password, (err, isMatch)=>{
                 if(!err){
@@ -118,7 +121,7 @@ UserSchema.methods = {
                 });
             }
         });
-    }
+    },
 };
 
-Mongoose.model('User', TokenSchema, 'users');
+Mongoose.model('User', UserSchema, 'users');
