@@ -26,7 +26,7 @@ exports.signUp = async (context, next)=>{
         email: email,
     });
     if(user){
-        return context.redirect(URL_PREFIX + '/signIn');
+        return context.redirect(URL_PREFIX + '/user/signIn');
     }
     user = new User({
         email: email,
@@ -50,7 +50,7 @@ exports.signIn = async (context, next) => {
         email: email,
     });
     if(!user){
-        return context.redirect(URL_PREFIX + '/signUp');
+        return context.redirect(URL_PREFIX + '/user/signUp');
     }
     let isMatch = await user.checkpassword(password, user.password);
     if(isMatch){
@@ -60,7 +60,7 @@ exports.signIn = async (context, next) => {
         };
         return context.redirect(URL_PREFIX + '/');
     }
-    return context.redirect(URL_PREFIX + '/signIn');
+    return context.redirect(URL_PREFIX + '/user/signIn');
 };
 
 exports.logOut = async (context, next)=>{
