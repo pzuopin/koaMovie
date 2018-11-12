@@ -1,5 +1,6 @@
 const Mongoose = require('mongoose');
 const User = Mongoose.model('User');
+const {URL_PREFIX} = require('../../config');
 
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/signUp', {
@@ -23,7 +24,7 @@ exports.signUp = async (context, next)=>{
         email: email,
     });
     if(user){
-        return context.redirect(context.state.URL_PREFIX + '/user/signIn');
+        return context.redirect(URL_PREFIX + '/user/signIn');
     }
     user = new User({
         email: email,
@@ -35,7 +36,7 @@ exports.signUp = async (context, next)=>{
         nickname: user.nickname,
     };
     await user.save();
-    context.redirect(context.state.URL_PREFIX + '/');
+    context.redirect(URL_PREFIX + '/');
 };
 
 exports.signIn = async (context, next) => {
@@ -47,7 +48,7 @@ exports.signIn = async (context, next) => {
         email: email,
     });
     if(!user){
-        return context.redirect(context.state.URL_PREFIX + '/user/signUp');
+        return context.redirect(URL_PREFIX + '/user/signUp');
     }
     let isMatch = await user.checkpassword(password, user.password);
     if(isMatch){
@@ -55,12 +56,12 @@ exports.signIn = async (context, next) => {
             _id: user._id,
             nickname: user.nickname,
         };
-        return context.redirect(context.state.URL_PREFIX + '/');
+        return context.redirect(URL_PREFIX + '/');
     }
-    return context.redirect(context.state.URL_PREFIX + '/user/signIn');
+    return context.redirect(URL_PREFIX + '/user/signIn');
 };
 
 exports.logOut = async (context, next)=>{
     context.session.user = null;
-    return context.redirect(context.state.URL_PREFIX + '/');
+    return context.redirect(URL_PREFIX + '/');
 };
