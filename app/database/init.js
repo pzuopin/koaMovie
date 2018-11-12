@@ -7,7 +7,7 @@ Mongoose.Promise = global.Promise;
 exports.Connect = (db)=>{
     let maxConnectTimes = 0;
     return new Promise((reslove)=>{
-        mongoose.set('useCreateIndex', true);
+        Mongoose.set('useCreateIndex', true);
         if(process.env.NODE_ENV !== 'production'){
             Mongoose.set('debug', true);
         }
