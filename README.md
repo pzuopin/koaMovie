@@ -10,6 +10,7 @@
 - mongoose
 - 微信开放能力
 - Pug模板引擎
+- Bootstrap
 
 ## Build Setup
 
