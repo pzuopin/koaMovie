@@ -52,7 +52,7 @@ UserSchema.pre('save', function(next){
     next();
 }); 
 
-UserSchema.pre('save', (next)=>{
+UserSchema.pre('save', function(next){
     let user = this;
     if(!user.isModified('password')){
         return next();
