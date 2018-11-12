@@ -7,6 +7,7 @@ const Path = require('path');
 const Config = require('./config');
 const { InitSchemas, Connect } = require('./app/database/init');
 const Views = require('koa-views');
+const Mongoose = require('mongoose');
 
 (async ()=>{
     await Connect(Config.MONGODB);
@@ -23,8 +24,33 @@ const Views = require('koa-views');
         },
     }));
 
+    App.keys = [Config.SESSION_KEY];
     App.use(Session(App));
     App.use(BodyParser());
+
+    App.use(async (context, next) => {
+        const UserModel = Mongoose.model('User');
+        let user = context.session.user;
+        if (user && user._id) {
+          user = await UserModel.findOne({ _id: user._id });
+          if (user) {
+            context.session.user = {
+              _id: user._id,
+              nickname: user.nickname,
+            };
+            context.state = Object.assign(context.state, {
+              user: {
+                _id: user._id,
+                nickname: user.nickname,
+              },
+              URL_PREFIX: Config.URL_PREFIX,
+            });
+          }
+        } else {
+          context.session.user = null;
+        }
+        await next();
+    });
 
     require('./config/routes')(Router);
     App.use(Router.routes()).use(Router.allowedMethods());

@@ -19,6 +19,8 @@ const SALT_WORK_FACTOR = 10;
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCK_TIME = 2 * 60 * 60 * 1000;
 
+const SESSION_KEY = 'r4*$cUQ4';
+
 module.exports = {
     PORT,
     WECHAT,
@@ -28,4 +30,5 @@ module.exports = {
     SALT_WORK_FACTOR,
     MAX_LOGIN_ATTEMPTS,
     LOCK_TIME,
+    SESSION_KEY,
 };

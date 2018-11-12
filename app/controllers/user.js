@@ -1,17 +1,14 @@
 const Mongoose = require('mongoose');
 const User = Mongoose.model('User');
-const { URL_PREFIX } = require('./../../config');
 
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/signUp', {
-        URL_PREFIX,
         title: '注册页面',
     });
 };
 
 exports.showSignIn = async (context, next)=>{
     await context.render('pages/signIn', {
-        URL_PREFIX,
         title: '登录页面',
     });
 };
