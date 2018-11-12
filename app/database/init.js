@@ -14,7 +14,7 @@ exports.Connect = (db)=>{
         Mongoose.connection.on('disconnect', ()=>{
             maxConnectTimes++;
             if(maxConnectTimes < 5){
-                Mongoose.connect(db);
+                Mongoose.connect(db, {useNewUrlParser:true});
             }else{
                 throw new Error("数据库挂了~");
             }
@@ -22,7 +22,7 @@ exports.Connect = (db)=>{
         Mongoose.connection.on('error', (err)=>{
             maxConnectTimes++;
             if(maxConnectTimes < 5){
-                Mongoose.connect(db);
+                Mongoose.connect(db, {useNewUrlParser:true});
             }else{
                 throw new Error("数据库连接出错了~");
             }
