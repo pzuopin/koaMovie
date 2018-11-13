@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 const User = Mongoose.model('User');
-const {URL_PREFIX} = require('../../config');
+const {URL_PREFIX} = require('../../../config');
 
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/user/signUp', {
