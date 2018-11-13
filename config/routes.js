@@ -2,6 +2,7 @@ const Config = require('../config');
 const WeChat = require('../app/controllers/wechat');
 const User = require('../app/controllers/user');
 const Index = require('../app/controllers/index');
+const Category = require('../app/controllers/movie/category');
 
 module.exports = router => {
     router.get(Config.URL_PREFIX + '/', Index.homePage);
@@ -17,5 +18,11 @@ module.exports = router => {
     router.post(Config.URL_PREFIX + '/user/signUp', User.signUp);
     router.post(Config.URL_PREFIX + '/user/signIn', User.signIn);
     router.get(Config.URL_PREFIX + '/user/logOut', User.logOut);
-    router.get(Config.URL_PREFIX + '/user/list', User.signInRequired, User.adminRequired, User.list);
+
+    router.get(Config.URL_PREFIX + '/admin/user/list', User.signInRequired, User.adminRequired, User.list);
+
+    router.get(Config.URL_PREFIX + '/admin/movie/category/show', User.signInRequired, User.adminRequired, Category.show);
+    router.get(Config.URL_PREFIX + '/admin/movie/category/update/:_id', User.signInRequired, User.adminRequired, Category.show);
+    router.post(Config.URL_PREFIX + '/admin/movie/category', User.signInRequired, User.adminRequired, Category.new);
+    router.get(Config.URL_PREFIX + '/admin/movie/category/list', User.signInRequired, User.adminRequired, Category.list);
 };

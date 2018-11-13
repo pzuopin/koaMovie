@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 const Bcrypt = require('bcrypt');
-const {SALT_WORK_FACTOR, MAX_LOGIN_ATTEMPTS, LOCK_TIME} = require('../../../config');
+const {SALT_WORK_FACTOR, MAX_LOGIN_ATTEMPTS, LOCK_TIME} = require('../../../../config');
 
 const Schema = Mongoose.Schema;
 const UserSchema = new Schema({
