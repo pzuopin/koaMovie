@@ -36,6 +36,7 @@ exports.signUp = async (context, next)=>{
     context.session.user = {
         _id: user._id,
         nickname: user.nickname,
+        role: user.role,
     };
     await user.save();
     context.redirect(URL_PREFIX + '/');
@@ -57,6 +58,7 @@ exports.signIn = async (context, next) => {
         context.session.user = {
             _id: user._id,
             nickname: user.nickname,
+            role: user.role,
         };
         return context.redirect(URL_PREFIX + '/');
     }
@@ -66,4 +68,29 @@ exports.signIn = async (context, next) => {
 exports.logOut = async (context, next)=>{
     context.session.user = null;
     return context.redirect(URL_PREFIX + '/');
+};
+
+exports.list = async (context, next)=>{
+    let users = await User.find({}).sort('meta.updatedAt');
+    await context.render("pages/userList", {
+        URL_PREFIX,
+        title: "用户列表页面",
+        users,
+    });
+};
+
+exports.signInRequired = async (context, next)=>{
+    let user = context.session.user;
+    if(!user || !user._id){
+        return context.redirect(URL_PREFIX + '/user/signIn');
+    }
+    await next();
+};
+
+exports.adminRequired = async (context, next)=>{
+    let user = context.session.user;
+    if("admin" != user.role){
+        return context.redirect(URL_PREFIX + '/user/signIn');
+    }
+    await next();
 };

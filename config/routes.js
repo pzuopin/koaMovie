@@ -17,4 +17,5 @@ module.exports = router => {
     router.post(Config.URL_PREFIX + '/user/signUp', User.signUp);
     router.post(Config.URL_PREFIX + '/user/signIn', User.signIn);
     router.get(Config.URL_PREFIX + '/user/logOut', User.logOut);
+    router.get(Config.URL_PREFIX + '/user/list', User.signInRequired, User.adminRequired, User.list);
 };

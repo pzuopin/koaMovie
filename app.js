@@ -37,6 +37,7 @@ const Mongoose = require('mongoose');
             context.session.user = {
               _id: user._id,
               nickname: user.nickname,
+              role: user.role,
             };
             context.state = Object.assign(context.state, {
               user: {
