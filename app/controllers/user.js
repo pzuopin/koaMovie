@@ -3,14 +3,14 @@ const User = Mongoose.model('User');
 const {URL_PREFIX} = require('../../config');
 
 exports.showSignUp = async (context, next)=>{
-    await context.render('pages/signUp', {
+    await context.render('pages/user/signUp', {
         title: '注册页面',
         URL_PREFIX,
     });
 };
 
 exports.showSignIn = async (context, next)=>{
-    await context.render('pages/signIn', {
+    await context.render('pages/user/signIn', {
         title: '登录页面',
         URL_PREFIX,
     });
@@ -72,7 +72,7 @@ exports.logOut = async (context, next)=>{
 
 exports.list = async (context, next)=>{
     let users = await User.find({}).sort('meta.updatedAt');
-    await context.render("pages/userList", {
+    await context.render("pages/user/list", {
         URL_PREFIX,
         title: "用户列表页面",
         users,
