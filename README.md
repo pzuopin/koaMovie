@@ -8,7 +8,7 @@
 - Koa2
 - MongoDB
 - mongoose
-- 微信开放能力
+- 微信公众号
 - Pug模板引擎
 - Bootstrap
 
