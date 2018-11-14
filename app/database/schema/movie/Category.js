@@ -33,4 +33,4 @@ CategorySchema.pre('save', function(next){
     next();
 }); 
 
-Mongoose.model('Category', CategorySchema, 'Categories');
+Mongoose.model('Category', CategorySchema, 'categories');

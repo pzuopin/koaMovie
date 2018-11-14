@@ -3,6 +3,8 @@ const WeChat = require('../app/controllers/wechat');
 const User = require('../app/controllers/user');
 const Index = require('../app/controllers/index');
 const Category = require('../app/controllers/movie/category');
+const Movie = require('../app/controllers/movie');
+const KoaBody = require('koa-body');
 
 module.exports = router => {
     router.get(Config.URL_PREFIX + '/', Index.homePage);
@@ -20,9 +22,17 @@ module.exports = router => {
     router.get(Config.URL_PREFIX + '/user/logOut', User.logOut);
 
     router.get(Config.URL_PREFIX + '/admin/user/list', User.signInRequired, User.adminRequired, User.list);
+    router.delete(Config.URL_PREFIX + '/admin/user', User.signInRequired, User.adminRequired, User.del);
 
     router.get(Config.URL_PREFIX + '/admin/movie/category/show', User.signInRequired, User.adminRequired, Category.show);
     router.get(Config.URL_PREFIX + '/admin/movie/category/update/:_id', User.signInRequired, User.adminRequired, Category.show);
     router.post(Config.URL_PREFIX + '/admin/movie/category', User.signInRequired, User.adminRequired, Category.new);
+    router.delete(Config.URL_PREFIX + '/admin/movie/category', User.signInRequired, User.adminRequired, Category.del);
     router.get(Config.URL_PREFIX + '/admin/movie/category/list', User.signInRequired, User.adminRequired, Category.list);
+
+    router.get(Config.URL_PREFIX + '/admin/movie/show', User.signInRequired, User.adminRequired, Movie.show);
+    router.get(Config.URL_PREFIX + '/admin/movie/update/:_id', User.signInRequired, User.adminRequired,Movie.show);
+    router.post(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, KoaBody({ multipart: true }), Movie.savePoster, Movie.new);
+    router.get(Config.URL_PREFIX + '/admin/movie/list', User.signInRequired, User.adminRequired, Movie.list);
+    router.delete(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, Movie.del);
 };

@@ -8,6 +8,7 @@ const Config = require('./config');
 const { InitSchemas, Connect } = require('./app/database/init');
 const Views = require('koa-views');
 const Mongoose = require('mongoose');
+const Serve = require('koa-static-server');
 
 (async ()=>{
     await Connect(Config.MONGODB);
@@ -27,6 +28,10 @@ const Mongoose = require('mongoose');
     App.keys = [Config.SESSION_KEY];
     App.use(Session(App));
     App.use(BodyParser());
+    App.use(Serve({
+      rootDir: Path.resolve(__dirname, 'public'),
+      rootPath: Config.URL_PREFIX + '/static',
+    }));
 
     App.use(async (context, next) => {
         const UserModel = Mongoose.model('User');

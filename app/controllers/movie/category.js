@@ -41,3 +41,18 @@ exports.list = async (context, next)=>{
         URL_PREFIX,        
     });
 };
+
+exports.del = async (context, next)=>{
+    let _id = context.query.id;
+    try{
+        await Category.deleteOne({_id});
+        context.body = {
+            success: true,
+        };
+    }catch(error){
+        console.log(error);
+        context.body = {
+            success: false,
+        };        
+    }
+};

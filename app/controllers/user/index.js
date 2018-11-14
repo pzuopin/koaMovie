@@ -1,6 +1,7 @@
 const Mongoose = require('mongoose');
-const User = Mongoose.model('User');
 const {URL_PREFIX} = require('../../../config');
+
+const User = Mongoose.model('User');
 
 exports.showSignUp = async (context, next)=>{
     await context.render('pages/user/signUp', {
@@ -93,4 +94,19 @@ exports.adminRequired = async (context, next)=>{
         return context.redirect(URL_PREFIX + '/user/signIn');
     }
     await next();
+};
+
+exports.del = async (context, next)=>{
+    let _id = context.query.id;
+    try{
+        await User.deleteOne({_id});
+        context.body = {
+            success: true,
+        };
+    }catch(error){
+        console.log(error);
+        context.body = {
+            success: false,
+        };        
+    }
 };
