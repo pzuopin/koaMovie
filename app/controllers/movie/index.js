@@ -113,3 +113,14 @@ exports.savePoster = async (context, next)=>{
 
     await next();
 };
+
+exports.detail = async (context, next)=>{
+    let _id = context.params._id;
+    let movie = await Movie.findOne({_id});
+    await Movie.update({_id}, {$inc: {pv:1}});
+    await context.render("pages/movie/movie_detail", {
+        title: '电影详情页面',
+        movie,
+        URL_PREFIX,
+    });
+};

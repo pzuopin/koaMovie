@@ -8,6 +8,7 @@ const KoaBody = require('koa-body');
 
 module.exports = router => {
     router.get(Config.URL_PREFIX + '/', Index.homePage);
+    router.get(Config.URL_PREFIX + '/movie/:_id', Movie.detail);
 
     router.get(Config.URL_PREFIX + '/wx-hear', WeChat.hear);
     router.post(Config.URL_PREFIX + '/wx-hear', WeChat.hear);

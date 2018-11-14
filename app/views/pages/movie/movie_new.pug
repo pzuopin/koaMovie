@@ -12,6 +12,7 @@ block content
             input#inputDouban.form-control(type='text', name='doubanId', value=movie ? movie.doubanId : '')
         .form-group
           label.col-md-10.control-label(for="inputCategory") 分类选择
+          br
           if categories
             each cat in categories
               label.radio-inline
