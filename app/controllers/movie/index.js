@@ -11,6 +11,7 @@ const writeFileAsync = Util.promisify(writeFile);
 
 const Movie = Mongoose.model('Movie');
 const Category = Mongoose.model('Category');
+const Comment = Mongoose.model('Comment');
 
 exports.show = async (context, next)=>{
     let {_id} = context.params;
@@ -128,11 +129,17 @@ exports.savePoster = async (context, next)=>{
 exports.detail = async (context, next)=>{
     let _id = context.params._id;
     let movie = await Api.movie.searchMovieById(_id);
+    let comments = await Comment.find({
+        movie: _id,
+    })
+    .populate('from', '_id nickname')
+    .populate('replies.from replies.to', '_id nickname');
     await Movie.updateOne({_id}, {$inc: {pv:1}});
     await context.render("pages/movie/movie_detail", {
         title: '电影详情页面',
         movie,
         URL_PREFIX,
+        comments,
     });
 };
 

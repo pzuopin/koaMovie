@@ -4,6 +4,7 @@ const User = require('../app/controllers/user');
 const Index = require('../app/controllers/index');
 const Category = require('../app/controllers/movie/category');
 const Movie = require('../app/controllers/movie');
+const Comment = require('../app/controllers/movie/comment');
 const KoaBody = require('koa-body');
 
 module.exports = router => {
@@ -30,10 +31,12 @@ module.exports = router => {
     router.get(Config.URL_PREFIX + '/admin/movie/category/list', User.signInRequired, User.adminRequired, Category.list);
 
     router.get(Config.URL_PREFIX + '/movie/detail/:_id', Movie.detail);
+    router.post(Config.URL_PREFIX + '/movie/comment', User.signInRequired, Comment.save);
     router.get(Config.URL_PREFIX + '/movie/search', Movie.search);
     router.get(Config.URL_PREFIX + '/admin/movie/show', User.signInRequired, User.adminRequired, Movie.show);
     router.get(Config.URL_PREFIX + '/admin/movie/update/:_id', User.signInRequired, User.adminRequired,Movie.show);
     router.post(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, KoaBody({ multipart: true }), Movie.savePoster, Movie.new);
     router.get(Config.URL_PREFIX + '/admin/movie/list', User.signInRequired, User.adminRequired, Movie.list);
     router.delete(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, Movie.del);
+
 };
