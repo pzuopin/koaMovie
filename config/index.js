@@ -21,6 +21,8 @@ const LOCK_TIME = 2 * 60 * 60 * 1000;
 
 const SESSION_KEY = 'r4*$cUQ4';
 
+const DEBUG = true; // false
+
 module.exports = {
     PORT,
     WECHAT,
@@ -31,4 +33,5 @@ module.exports = {
     MAX_LOGIN_ATTEMPTS,
     LOCK_TIME,
     SESSION_KEY,
+    DEBUG,
 };

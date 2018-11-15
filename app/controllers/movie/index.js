@@ -131,9 +131,14 @@ exports.detail = async (context, next)=>{
     let movie = await Api.movie.searchMovieById(_id);
     let comments = await Comment.find({
         movie: _id,
-    })
-    .populate('from', '_id nickname')
-    .populate('replies.from replies.to', '_id nickname');
+    });
+    if(comments){
+        comments = await Comment.find({
+            movie: _id,
+        })
+        .populate('from', '_id nickname')
+        .populate('replies.from replies.to', '_id nickname');
+    }
     await Movie.updateOne({_id}, {$inc: {pv:1}});
     await context.render("pages/movie/movie_detail", {
         title: '电影详情页面',

@@ -28,6 +28,15 @@ const UrlJoin = (...args) => {
     return url;
 }
 
+const IsWeChat = (ua)=>{
+    if(ua.indexOf('MicroMessenger')>=0){
+        return true;
+    }else{
+        return false;
+    }
+};
+
 module.exports = {
     UrlJoin,
+    IsWeChat,
 };

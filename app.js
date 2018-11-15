@@ -33,6 +33,10 @@ const Serve = require('koa-static-server');
       rootPath: Config.URL_PREFIX + '/static',
     }));
 
+    const WeChatController = require('./app/controllers/wechat');
+    App.use(WeChatController.checkWechat);
+    App.use(WeChatController.wechatReDirect);
+
     App.use(async (context, next) => {
         const UserModel = Mongoose.model('User');
         let user = context.session.user;

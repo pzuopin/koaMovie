@@ -1,6 +1,7 @@
 const Mongoose = require('mongoose');
 const { resolve } = require('path');
 const glob = require('glob');
+const { DEBUG } = require('./../../config');
 
 Mongoose.Promise = global.Promise;
 
@@ -9,7 +10,7 @@ exports.Connect = (db)=>{
     return new Promise((reslove)=>{
         Mongoose.set('useCreateIndex', true);
         if(process.env.NODE_ENV !== 'production'){
-            Mongoose.set('debug', true);
+            Mongoose.set('debug', DEBUG);
         }
         Mongoose.connect(db, { useNewUrlParser: true });
         Mongoose.connection.on('disconnect', ()=>{
