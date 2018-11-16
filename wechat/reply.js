@@ -3,7 +3,7 @@ let commonMenu = require('./menu');
 const Config = require('../config');
 const Api = require('../app/api');
 
-const Help = '欢迎关注时光的余热\n' +
+const Help = '欢迎关注koaMovie\n' +
   '回复 1-3，测试文字回复\n' +
   '回复 4，测试图片回复\n' +
   '回复 首页，进入网站首页\n' +
@@ -11,7 +11,7 @@ const Help = '欢迎关注时光的余热\n' +
   '点击帮助，获取帮助信息\n' +
   '某些功能呢订阅号无权限，比如网页授权\n' +
   '回复语音，查询电影信息\n' +
-  '也可以点击 <a href="' + Config.BASE_URL + '/sdk">语音查电影</a>，查询电影信息\n';
+  '也可以点击' + Config.BASE_URL + '/sdk' + '语音查电影，查询电影信息\n';
 
 module.exports = async (context, next)=>{
     const Message = context.weixin;
@@ -465,7 +465,7 @@ module.exports = async (context, next)=>{
             }         
         }else if("首页" === content){
             reply = [{
-                title: "时光的余热",
+                title: "koaMovie",
                 description: "匆匆岁月，有你最爱",
                 picUrl: "http://imgsrc.baidu.com/forum/pic/item/72a2813eb13533faa72b7044a5d3fd1f40345bb1.jpg",
                 url: Config.BASE_URL,

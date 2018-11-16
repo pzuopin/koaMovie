@@ -1,0 +1,21 @@
+apps:
+  - script: app.js
+    name: koaMovie
+    env:
+      COMMON_VARIABLE: true
+    env_production:
+      NODE_ENV: production
+deploy:
+  production:
+    user: root
+    host:
+      - 39.107.243.214
+    port: '8091'
+    ref: origin/master
+    repo: root@dev.feihu1996.cn:/usr/local/project/koaMovie.git
+    path: /usr/local/public/app/koaMovie
+    ssh_options: StrictHostKeyChecking=no
+    pre-deploy: git fetch --all
+    post-deploy: 'npm i && pm2 startOrRestart ecosystem.yaml --env production'
+    env:
+      NODE_ENV: production
