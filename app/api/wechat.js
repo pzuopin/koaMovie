@@ -52,3 +52,66 @@ exports.saveWeChatUser = async (UserData)=>{
     }
     return user;
 };
+
+exports.saveMpUser = async (message, from='')=>{
+    let sceneId = message.EventKey;
+    let openid = message.FromUserName;
+    let count = 0;
+    if (sceneId && sceneId.indexOf('qrscene_') > -1) {
+      sceneId = sceneId.replace('qrscene_', '');
+    }
+    let user = await User.findOne({
+      openid: openid,
+    });
+    let mp = require('../../wechat/index');
+    let client = mp.getWeChat();
+    let userInfo = await client.handle('getUserInfo', openid);
+    if ('koaMovie' === sceneId) {
+      from = 'koaMovie';
+    }
+    if (!user) {
+      let userData = {
+        from: from,
+        openid: [userInfo.openid],
+        unionid: userInfo.unionid,
+        nickname: userInfo.nickname,
+        email: (userInfo.unionid || userInfo.openid) + '@wx.com',
+        province: userInfo.province,
+        country: userInfo.country,
+        city: userInfo.city,
+        gender: userInfo.gender,
+      };
+      user = new User(userData);
+      user = await user.save();
+    }
+    if ('koaMovie' === from) {
+      let tagid;
+      count = await User.count({
+        from: 'koaMovie',
+      });
+      try {
+        let tagsData = await client.handle('fetchTags');
+        tagsData = tagsData || {};
+        let tags = tagsData.tags || [];
+        let filteredTags = tags.filter(tag => {
+          return 'koaMovie' === tag.name;
+        });
+        if (filteredTags && filteredTags.length > 0) {
+          tagid = filteredTags[0].id;
+          count = filteredTags[0].count || 0;
+        } else {
+          let res = await client.handle('createTag', 'koaMovie');
+          tagid = res.tag.id;
+        }
+        if (tagid) {
+          await client.handle('batchUsersTag', [openid], tagid);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    return {
+      user,
+      count,
+    };
+}

@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     },
     openid: [String],
     unionid: String,
+    from: String,
     nickname: String,
     address: String,
     province: String,

@@ -23,7 +23,24 @@ module.exports = async (context, next)=>{
     if('text' === Message.MsgType){
         let content = Message.Content;
         let reply = "接收文本消息～";
-        if("1" === content){
+        if("koaMovie" === content){
+            const CountData = await Api.wechat.saveMpUser(Message, content);
+            let user = CountData.user;
+            let count = CountData.count;
+            let nickname = user.nickname;
+            let guess = " 我猜不出你来自哪里......";
+            if("1" == user.gender){
+                nickname = `小哥哥 - ${nickname}`;
+            }else if("2" == user.gender){
+                nickname = `小姐姐  - ${nickname}`;
+            }
+            if(user.province || user.city){
+               guess = `我猜你来自${user.province}省${user.city}市`;
+            }
+            let end = `${guess}，哈哈，这些信息只有你关注我才能从微信服务器拿到~`;
+            reply = `哎呦喂，你是来自${content}的${nickname}，你的同伴有${count}个，${end}`;
+        }
+        else if("1" === content){
             reply = "1. 我喜欢你";
         }else if("2" === content){
             reply = "2. 我喜欢你";
