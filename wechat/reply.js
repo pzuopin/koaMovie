@@ -1,4 +1,16 @@
 let { resolve } = require('path');
+let commonMenu = require('./menu');
+const Config = require('../config');
+
+const Help = '欢迎关注时光的余热\n' +
+  '回复 1-3，测试文字回复\n' +
+  '回复 4，测试图片回复\n' +
+  '回复 首页，进入网站首页\n' +
+  '回复 电影名字，查询电影信息\n' +
+  '点击帮助，获取帮助信息\n' +
+  '某些功能呢订阅号无权限，比如网页授权\n' +
+  '回复语音，查询电影信息\n' +
+  '也可以点击 <a href="' + Config.BASE_URL + '/sdk">语音查电影</a>，查询电影信息\n';
 
 module.exports = async (context, next)=>{
     const Message = context.weixin;
@@ -423,6 +435,21 @@ module.exports = async (context, next)=>{
             }catch(e){
                 console.log(e);
             }            
+        }else if("更新菜单" === content){
+            try{
+                await client.handle('deleteMenu');
+                let data = await client.handle('createMenu', commonMenu);
+                reply = !data.errcode?'自定义菜单创建成功~':'更新菜单：公众号尚未通过微信认证，无法调用接口～';
+            }catch(e){
+                console.log(e);
+            }         
+        }else if("首页" === content){
+            reply = [{
+                title: "时光的余热",
+                description: "匆匆岁月，有你最爱",
+                picUrl: "http://imgsrc.baidu.com/forum/pic/item/72a2813eb13533faa72b7044a5d3fd1f40345bb1.jpg",
+                url: Config.BASE_URL,
+            }];
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
         }
@@ -445,6 +472,9 @@ module.exports = async (context, next)=>{
         }
         if("CLICK" === Message.Event){
             reply = `你点击了菜单的${Message.EventKey}`;
+            if("help" == Message.EventKey){
+                reply = Help;
+            }
         }
         if("VIEW" === Message.Event){
             reply = `你点击了菜单链接： ${Message.EventKey} ${Message.MenuId}`;
