@@ -18,7 +18,7 @@ const Serve = require('koa-static-server');
     const App = new Koa();
     const Router = new KoaRouter();
 
-    App.use(Views(Path.resolve(__dirname + '/app/views'), {
+    App.use(Views(Path.resolve(__dirname, 'app/views'), {
         extension: 'pug',
         options: {
             moment: Moment,
