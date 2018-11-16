@@ -27,5 +27,5 @@ npm install
 npm run start
 
 # check the style of all JavaScript files
-npm run precommit
+npm run feak-precommit
 ```
