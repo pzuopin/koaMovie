@@ -71,3 +71,13 @@ exports.wechatReDirect = async (context, next)=>{
     }
     await next();
 };
+
+exports.getSdkSignature = async (context, next)=>{
+    let url = context.query.url;
+    url = decodeURIComponent(url);
+    const Params = await Api.wechat.getSignature(url);
+    context.body = {
+      success: true,
+      data: Params,
+    };
+};
