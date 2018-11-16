@@ -39,5 +39,4 @@ module.exports = router => {
     router.post(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, KoaBody({ multipart: true }), Movie.savePoster, Movie.new);
     router.get(Config.URL_PREFIX + '/admin/movie/list', User.signInRequired, User.adminRequired, Movie.list);
     router.delete(Config.URL_PREFIX + '/admin/movie', User.signInRequired, User.adminRequired, Movie.del);
-
 };

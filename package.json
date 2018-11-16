@@ -4,7 +4,8 @@
   "description": "Koa2 实现电影微信公众号前后端开发",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [
     "koa",

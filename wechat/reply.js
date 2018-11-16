@@ -1,6 +1,7 @@
 let { resolve } = require('path');
 let commonMenu = require('./menu');
 const Config = require('../config');
+const Api = require('../app/api');
 
 const Help = '欢迎关注时光的余热\n' +
   '回复 1-3，测试文字回复\n' +
@@ -121,12 +122,14 @@ module.exports = async (context, next)=>{
 
             if(items){
                 items.forEach(item => {
-                    news.push({
-                        title: item.title,
-                        description: item.description,
-                        picUrl: data2.url,
-                        url: item.url,
-                    });
+                    news.push(
+                        {
+                            title: item.title,
+                            description: item.description,
+                            picUrl: data2.url,
+                            url: item.url,
+                        },
+                    );
                 });
             }
 
@@ -452,6 +455,33 @@ module.exports = async (context, next)=>{
             }];
         }else if("兰洁" === content){
             reply = "兰洁，我喜欢你";
+        }else{
+            let movies = await Api.movie.searchMoviesByKeyword(content);
+            if(!movies || 0 === movies.length){
+                movies = await Api.movie.findMoviesByCat(content);    
+            }               
+            if(!movies || 0 === movies.length){
+                movies = await Api.movie.searchDoubanMovies(content);    
+            }   
+            movies = movies.slice(0, 8);       
+            if(movies){
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });
+            }else{
+                reply = `没有查询到与${content}相关的电影，换个关键词试试看~`;
+            }
         }
         context.body = reply;
     }
@@ -475,6 +505,124 @@ module.exports = async (context, next)=>{
             if("help" == Message.EventKey){
                 reply = Help;
             }
+            if("movie_hot" == Message.EventKey){
+                let movies = await Api.movie.findHotMovies(-1, 3);
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }                   
+                    reply.push({
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    });
+                });
+            }
+            if("movie_cold" == Message.EventKey){
+                let movies = await Api.movie.findHotMovies(1, 3);
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });                
+            }
+            if("movie_comedy" == Message.EventKey){
+                let movies = await Api.movie.findMoviesByCat("喜剧");
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });                 
+            }    
+            if("movie_love" == Message.EventKey){
+                let movies = await Api.movie.findMoviesByCat("爱情");
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });                 
+            }  
+            if("movie_science_fiction" == Message.EventKey){
+                let movies = await Api.movie.findMoviesByCat("科幻");
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });                 
+            }
+            if("movie_suspense" == Message.EventKey){
+                let movies = await Api.movie.findMoviesByCat("悬疑");
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });   
+            }      
+            if("movie_animation" == Message.EventKey){
+                let movies = await Api.movie.findMoviesByCat("动画");
+                reply = [];
+                movies.forEach((movie)=>{
+                    let poster = movie.poster;
+                    if (poster.indexOf('http') === -1) {
+                        poster = Config.BASE_URL + '/static/upload/' + poster;
+                    }
+                    article = {
+                        title: movie.title,
+                        description: movie.summary,
+                        picUrl: poster,
+                        url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                    };                    
+                    reply.push(article);
+                });   
+            }                          
         }
         if("VIEW" === Message.Event){
             reply = `你点击了菜单链接： ${Message.EventKey} ${Message.MenuId}`;
@@ -501,5 +649,38 @@ module.exports = async (context, next)=>{
         reply = `接收图片消息：${Message.PicUrl?Message.PicUrl:''}`;
         context.body = reply;
     }
+
+    if('voice' === Message.MsgType){
+        reply = `接收语音消息~`;
+        let voiceText = Message.Recognition;
+        let movies = await Api.movie.searchMoviesByKeyword(voiceText);
+        if(!movies || 0 === movies.length){
+            movies = await Api.movie.findMoviesByCat(voiceText);    
+        }               
+        if(!movies || 0 === movies.length){
+            movies = await Api.movie.searchDoubanMovies(voiceText);    
+        }   
+        movies = movies.slice(0, 8);       
+        if(movies){
+            reply = [];
+            movies.forEach((movie)=>{
+                let poster = movie.poster;
+                if (poster.indexOf('http') === -1) {
+                    poster = Config.BASE_URL + '/static/upload/' + poster;
+                }
+                article = {
+                    title: movie.title,
+                    description: movie.summary,
+                    picUrl: poster,
+                    url: Config.BASE_URL + '/movie/detail/' + movie._id,
+                };                    
+                reply.push(article);
+            });
+        }else{
+            reply = `没有查询到与${voiceText}相关的电影，换个关键词试试看~`;
+        }       
+        context.body = reply;
+    }
+
     await next();
 };

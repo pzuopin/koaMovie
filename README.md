@@ -17,4 +17,7 @@
 ```bash
 # install dependecies
 npm install
+
+# start app
+npm run start
 ```
