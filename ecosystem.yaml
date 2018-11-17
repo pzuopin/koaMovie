@@ -9,7 +9,7 @@ deploy:
   production:
     user: root
     host:
-      - 39.107.243.214
+      - 127.0.0.1
     port: '8091'
     ref: origin/master
     repo: root@dev.feihu1996.cn:/usr/local/project/koaMovie.git
