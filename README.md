@@ -4,18 +4,14 @@
 
 ## Tech Stack
 
-- Node.js
-- Koa2
-- MongoDB
-- mongoose
-- 微信 JS-SDK
+- Node.js/Koa2
+- MongoDB/mongoose
+- 微信JS-SDK
 - Pug
-- Bootstrap
-- HTML
-- CSS
+- JQuery/Bootstrap
+- HTML/CSS
 - JavaScript
 - JavaScript Standard Style
-- ES6 / ES7
 - PM2
  
 ## Build Setup
@@ -39,6 +35,10 @@ pm2 deploy ecosystem.yaml production setup
 # deploy
 pm2 deploy ecosystem.yaml production
 ```
+
+## Demo Link
+
+[http://dev.feihu1996.cn/koaMovie/](http://dev.feihu1996.cn/koaMovie/ 'koaMovie')
 
 ## 配套接口测试公众号
 
