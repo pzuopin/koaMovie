@@ -21,7 +21,7 @@ const LOCK_TIME = 2 * 60 * 60 * 1000;
 
 const SESSION_KEY = 'r4*$cUQ4';
 
-const DEBUG = false;
+const DEBUG = true;
 
 module.exports = {
     PORT,
