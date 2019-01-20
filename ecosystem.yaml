@@ -12,10 +12,11 @@ deploy:
       - 127.0.0.1
     port: '8091'
     ref: origin/master
-    repo: root@dev.feihu1996.cn:/usr/local/project/koaMovie.git
+    repo: https://github.com/feihu1996x/koaMovie 
     path: /usr/local/public/app/koaMovie
     ssh_options: StrictHostKeyChecking=no
     pre-deploy: git fetch --all
     post-deploy: 'npm i && pm2 startOrRestart ecosystem.yaml --env production'
     env:
       NODE_ENV: production
+
