@@ -11,7 +11,7 @@ const MONGO_PORT = 27017;
 const MONGO_DB = 'koaMovie';
 const MONGODB = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`;
 
-const URL_PREFIX = '/koaMovie';  // /koaMovie
+const URL_PREFIX = '';  // /koaMovie
 
 const BASE_URL = 'http://dev.feihu1996.cn/koaMovie';
 
